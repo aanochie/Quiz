@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "Questions")
-public class QuestionTable {
+public class Question {
     @Id
     @GeneratedValue
     @Column(name = "id")
@@ -37,7 +37,7 @@ public class QuestionTable {
     // 1 if wrong last time, 2 if correct last time, 0 if never attempted
 
     // constructor for saq
-    public QuestionTable(String question, String topic, int type, String answer) {
+    public Question(String question, String topic, int type, String answer) {
         this.question = question;
         this.topic = topic;
         this.type = type;
@@ -48,7 +48,7 @@ public class QuestionTable {
     }
 
     // constructor for mcq
-    public QuestionTable(String question, String topic, int type, String answer, String other1, String other2, String other3) {
+    public Question(String question, String topic, int type, String answer, String other1, String other2, String other3) {
         this.question = question;
         this.topic = topic;
         this.type = type;
@@ -58,7 +58,7 @@ public class QuestionTable {
         this.other3 = other3;
     }
 
-    public QuestionTable() {
+    public Question() {
 
     }
 
