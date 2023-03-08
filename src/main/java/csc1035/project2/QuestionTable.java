@@ -33,7 +33,7 @@ public class QuestionTable {
     private String other3; // null if saq
 
     @Column(name = "correct")
-    private int correct; // did the user get this question right the last time they attempted it
+    private int correct = 0; // did the user get this question right the last time they attempted it
     // 1 if wrong last time, 2 if correct last time, 0 if never attempted
 
     // constructor for saq
@@ -45,7 +45,6 @@ public class QuestionTable {
         this.other1 = null;
         this.other2 = null;
         this.other3 = null;
-        this.correct = 0;
     }
 
     // constructor for mcq
@@ -57,10 +56,24 @@ public class QuestionTable {
         this.other1 = other1;
         this.other2 = other2;
         this.other3 = other3;
-        this.correct = 0;
     }
 
     public QuestionTable() {
 
+    }
+
+
+    @Override
+    public String toString() {
+        return "QuestionTable{" +
+                "id=" + id +
+                ", question='" + question + '\'' +
+                ", topic='" + topic + '\'' +
+                ", type=" + type +
+                ", answer='" + answer + '\'' +
+                ", other1='" + other1 + '\'' +
+                ", other2='" + other2 + '\'' +
+                ", other3='" + other3 + '\'' +
+                '}';
     }
 }
