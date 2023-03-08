@@ -1,14 +1,12 @@
 package csc1035.project2;
 
-import org.hibernate.Session;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class QuestionIO {
-    public static void main(String[] args) {
+    public static void main() {
         boolean running = true;
         while (running) {
             Scanner myScanner = new Scanner(System.in);

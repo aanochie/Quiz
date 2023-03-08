@@ -92,5 +92,4 @@ public class Question {
         session.save(this);
         session.getTransaction().commit();
     }
-
 }
