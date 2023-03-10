@@ -8,5 +8,16 @@
       <jdbc-url>jdbc:mysql://cs-db.ncl.ac.uk:3306/csc1035_team45</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="hibernate.cfg.xml/Hibernate" uuid="f4d65e66-5b0c-48db-ae23-4030d8470ede">
+      <driver-ref>mysql</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>Hibernate
+
+H:/Work/1035/project 2/group project/src/main/resources/hibernate.cfg.xml</remarks>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://cs-db.ncl.ac.uk/csc1035_team45</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
