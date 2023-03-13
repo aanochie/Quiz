@@ -2,11 +2,6 @@ package csc1035.project2;
 import org.hibernate.Session;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 @Entity
 @Table(name = "Quizzes")
@@ -79,60 +74,6 @@ public class Quiz {
     @Column(name = "qid_20")
     private int qid_20; // question id 20 - "-1" if 5/10/15 question quiz
 
-
-
-    // 5 Question constructor
-    public Quiz(List<Integer> generatedQuestionId) {
-        Field[] fields = this.getClass().getDeclaredFields();
-        // j is initialized as 2 so id and score are not counted in the loop
-        for(int i=0, j=2; i < generatedQuestionId.size() && j < generatedQuestionId.size(); i++, j++){
-            try{
-                fields[j].setAccessible(true);
-                fields[j].set(this, generatedQuestionId.get(i));
-            }catch(IllegalAccessException e){
-                System.out.println("Illegal Access Exception");
-            }
-        }
-        this.score = 0;
-    }
-
-
-    // 10 Question constructor
-    public Quiz(int qid_1, int qid_2, int qid_3, int qid_4, int qid_5, int qid_6, int qid_7, int qid_8, int qid_9, int qid_10) {
-        this.qid_1 = qid_1;
-        this.qid_2 = qid_2;
-        this.qid_3 = qid_3;
-        this.qid_4 = qid_4;
-        this.qid_5 = qid_5;
-        this.qid_6 = qid_6;
-        this.qid_7 = qid_7;
-        this.qid_8 = qid_8;
-        this.qid_9 = qid_9;
-        this.qid_10 = qid_10;
-        this.score = 0;
-    }
-
-    // 15 Question constructor
-    public Quiz(int qid_1, int qid_2, int qid_3, int qid_4, int qid_5, int qid_6, int qid_7, int qid_8, int qid_9, int qid_10, int qid_11, int qid_12, int qid_13, int qid_14, int qid_15) {
-        this.qid_1 = qid_1;
-        this.qid_2 = qid_2;
-        this.qid_3 = qid_3;
-        this.qid_4 = qid_4;
-        this.qid_5 = qid_5;
-        this.qid_6 = qid_6;
-        this.qid_7 = qid_7;
-        this.qid_8 = qid_8;
-        this.qid_9 = qid_9;
-        this.qid_10 = qid_10;
-        this.qid_11 = qid_11;
-        this.qid_12 = qid_12;
-        this.qid_13 = qid_13;
-        this.qid_14 = qid_14;
-        this.qid_15 = qid_15;
-        this.score = 0;
-    }
-
-    // 20 Question constructor
     public Quiz(int qid_1, int qid_2, int qid_3, int qid_4, int qid_5, int qid_6, int qid_7, int qid_8, int qid_9, int qid_10, int qid_11, int qid_12, int qid_13, int qid_14, int qid_15, int qid_16, int qid_17, int qid_18, int qid_19, int qid_20) {
         this.qid_1 = qid_1;
         this.qid_2 = qid_2;
@@ -157,14 +98,13 @@ public class Quiz {
         this.score = 0;
     }
 
-
     public Quiz() {
 
     }
 
     public static void main(String[] args) {
-        //Quiz first_quiz = new Quiz(1, 2, 3, 4, 5);
-        //first_quiz.save();
+        Quiz first_quiz = new Quiz(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, -1, -1, -1, -1, -1);
+        first_quiz.save();
     }
 
     public void save() {
