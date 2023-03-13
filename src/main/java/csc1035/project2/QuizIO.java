@@ -93,9 +93,17 @@ public class QuizIO {
             }
             break;
         }
-
-
         // From here generate quiz using Quiz class
+
+    }
+    // Generate quiz
+    /*
+    * Need a list of generated question ids
+    * Take each id and create a quiz object
+    * In quiz class should have constructor which takes a list of ids(int) as a parameter
+    * For each id in the list map to respective qid_n
+    * */
+    public static void generatingQuiz(){
 
     }
 }

@@ -2,6 +2,11 @@ package csc1035.project2;
 import org.hibernate.Session;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Entity
 @Table(name = "Quizzes")
@@ -74,13 +79,20 @@ public class Quiz {
     @Column(name = "qid_20")
     private int qid_20; // question id 20 - "-1" if 5/10/15 question quiz
 
+
+
     // 5 Question constructor
-    public Quiz(int qid_1, int qid_2, int qid_3, int qid_4, int qid_5) {
-        this.qid_1 = qid_1;
-        this.qid_2 = qid_2;
-        this.qid_3 = qid_3;
-        this.qid_4 = qid_4;
-        this.qid_5 = qid_5;
+    public Quiz(List<Integer> generatedQuestionId) {
+        Field[] fields = this.getClass().getDeclaredFields();
+        // j is initialized as 2 so id and score are not counted in the loop
+        for(int i=0, j=2; i < generatedQuestionId.size() && j < generatedQuestionId.size(); i++, j++){
+            try{
+                fields[j].setAccessible(true);
+                fields[j].set(this, generatedQuestionId.get(i));
+            }catch(IllegalAccessException e){
+                System.out.println("Illegal Access Exception");
+            }
+        }
         this.score = 0;
     }
 
@@ -151,8 +163,8 @@ public class Quiz {
     }
 
     public static void main(String[] args) {
-        Quiz first_quiz = new Quiz(1, 2, 3, 4, 5);
-        first_quiz.save();
+        //Quiz first_quiz = new Quiz(1, 2, 3, 4, 5);
+        //first_quiz.save();
     }
 
     public void save() {
