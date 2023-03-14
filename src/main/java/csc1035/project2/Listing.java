@@ -1,4 +1,10 @@
 package csc1035.project2;
+import javax.persistence.*;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,4 +54,46 @@ public class Listing {
         return questionsByTopic;
         // Returns a List object that stores the Question object of the specified topic
     }
+
+
+   public Object topicQuery (String topic) {
+       // Need a list of question id or question object using topic Query
+       // Query gets the question object and stores them into array
+       // Query gives you resulting string
+       // Returns Array of Question Object
+       // Make Array into List of Question Object
+       Session session = HibernateUtil.getSessionFactory().openSession();
+       session.beginTransaction();
+
+       //Query
+       // Query returns a query of Question objects
+       Query query = session.createQuery("from Question q where q.topic = :topic ");
+       query.setParameter("topic", topic);
+
+       Object results = query.getResultList(); // Returns list of arrays of Question object, to see array use ArraysToString()
+       System.out.println(results);
+       session.getTransaction().commit();
+
+       return results;
+   }
+
+   public void typeQuery (int type){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+
+        // Query
+       Query query = session.createQuery("from Question q where q.type = :type");
+       query.setParameter("type", type);
+
+       Object results = query.getResultList();
+       System.out.println(results);
+       session.getTransaction().commit();
+   }
+   public static void main(String[] args){
+        Listing listing = new Listing();
+        //listing.topicQuery("databases");
+        listing.typeQuery(2);
+   }
+
+
 }

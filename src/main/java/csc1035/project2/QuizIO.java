@@ -105,7 +105,7 @@ public class QuizIO {
     * generatedQuestionId
     * Quiz(List<Integer> generatedQuestionId)
     * Needs to get questions by type, topic and incorrect
-    * For length take the list generated, mysql query should include LIMIT 5/10/
+    * For length take the list generated, mysql query should include LIMIT 5/10/15/20
     * */
     public static void generatingQuiz(){
 
