@@ -102,6 +102,10 @@ public class QuizIO {
     * Take each id and create a quiz object
     * In quiz class should have constructor which takes a list of ids(int) as a parameter
     * For each id in the list map to respective qid_n
+    * generatedQuestionId
+    * Quiz(List<Integer> generatedQuestionId)
+    * Needs to get questions by type, topic and incorrect
+    * For length take the list generated, mysql query should include LIMIT 5/10/
     * */
     public static void generatingQuiz(){
 
