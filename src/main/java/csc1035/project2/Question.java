@@ -39,6 +39,13 @@ public class Question {
     private int correct; // did the user get this question right the last time they attempted it
     // 1 if wrong last time, 2 if correct last time, 0 if never attempted
 
+    public String getTopic(){
+        return this.topic;
+    }
+
+    public int getType(){
+        return this.type;
+    }
     // constructor for saq
     public Question(String question, String topic, int type, String answer) {
         this.question = question;
