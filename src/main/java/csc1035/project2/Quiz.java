@@ -82,9 +82,13 @@ public class Quiz {
 
 
     // 5 Question constructor
+    // Quiz constructor to set generated questions
+    // set this.qid_n = qid_n
+    // Where qid_n comes from a list of generated questions id
     public Quiz(List<Integer> generatedQuestionId) {
         Field[] fields = this.getClass().getDeclaredFields();
         // j is initialized as 2 so id and score are not counted in the loop
+        // To check this println(fields[0]+\n fields[1]) should show Quiz.id and Quiz.score
         for(int i=0, j=2; i < generatedQuestionId.size() && j < generatedQuestionId.size(); i++, j++){
             try{
                 fields[j].setAccessible(true);
