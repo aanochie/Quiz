@@ -1,99 +1,45 @@
 package csc1035.project2;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class Listing {
-    private List<Question> allQuestions = new ArrayList<>();
-    public Listing(){
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        Query query = session.createQuery("from Question ");
-        this.allQuestions = query.list();
-        session.getTransaction().commit();
-        session.close();
-    }
+public class QuestionManager {
+    private List<Question> questions = new ArrayList<>(); // 创建一个List对象用于存储Question对象
 
 
     public void addQuestion(Question question) {
-        allQuestions.add(question);
-        // Add the Question object to the List object
+        questions.add(question); // 将Question对象添加到List对象中
     }
 
     public List<Question> getAllQuestions() {
-        return allQuestions;
-        // Returns a List object that stores all Question objects
+        return questions; // 返回存储所有Question对象的List对象
     }
 
-    public List<Question> getQuestionsByType(int type) {
-        List<Question> questionsByType = new ArrayList<>();
-        // Create a new List object to store the specified type of Question object
-        for (Question question : allQuestions) {
-            if (question.getType() == type) {
-                // If the type of the Question object is the same as the specified type
-                questionsByType.add(question);
-                // Add the Question object to the new List object
+    public List<Question> getQuestionsByType(QuestionType type) {
+        List<Question> questionsByType = new ArrayList<>(); // 创建一个新的List对象用于存储指定类型的Question对象
+
+        for (Question question : questions) {
+            if (question.getType() == type) { // 如果Question对象的类型与指定类型相同
+                questionsByType.add(question); // 将Question对象添加到新的List对象中
             }
         }
-        return questionsByType;
-        // Returns a List object that stores the Question object of the specified type
+
+        return questionsByType; // 返回存储指定类型的Question对象的List对象
     }
 
     public List<Question> getQuestionsByTopic(String topic) {
-        List<Question> questionsByTopic = new ArrayList<>();
-        // Create a new List object to store the Question object for the specified topic
-        for (Question question : allQuestions) {
-            if (question.getTopic().equals(topic)) {
-                // If the topic of the Question object is the same as the specified topic
-                questionsByTopic.add(question);
-                // Add the Question object to the new List object
+        List<Question> questionsByTopic = new ArrayList<>(); // 创建一个新的List对象用于存储指定主题的Question对象
+
+        for (Question question : questions) {
+            if (question.getTopic().equals(topic)) { // 如果Question对象的主题与指定主题相同
+                questionsByTopic.add(question); // 将Question对象添加到新的List对象中
             }
         }
-        return questionsByTopic;
-        // Returns a List object that stores the Question object of the specified topic
+
+        return questionsByTopic; // 返回存储指定主题的Question对象的List对象
     }
 
-    public List<Integer> generatedQuestions(String topic, int type, int correct, int limit){
-        List<Integer> generatedQuestionsId = new ArrayList<>();
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
+    public static int getType(int a,int b){
 
-        Query query = session.createQuery("select q.id from Question q where type= :type " +
-                "and topic= :topic and correct= :correct").setMaxResults(limit);
-        query.setParameter("type", type);
-        query.setParameter("topic", topic);
-        query.setParameter("correct", correct);
-        generatedQuestionsId = query.list();
-        session.getTransaction().commit();
-        session.close();
-        /*
-        for (Question q : getAllQuestions()){
-            if(q.getTopic().equals(topic) && q.getType() == type && q.getCorrect() == correct){
-                generatedQuestionsId.add(q.getId());
-            }
-        }
-         */
 
-        /*
-        for (int i = 0; i < getAllQuestions().size(); i++) {
-            if (getAllQuestions().get(i).getTopic().equals(topic) && getAllQuestions().get(i).getType() == type
-                    && getAllQuestions().get(i).getCorrect() == correct) {
-                generatedQuestionsId.add(getAllQuestions().get(i).getId());
-            }
-        }
-        */
-        return generatedQuestionsId;
     }
-
-   public static void main(String[] args){
-        Listing listing = new Listing();
-        //listing.topicQuery("maths");
-        //listing.typeQuery(2);
-       System.out.println(listing.generatedQuestions("maths", 1, 0, 3).size());
-       //System.out.println(listing.getAllQuestions().get(0).getId());
-   }
-
-
 }
