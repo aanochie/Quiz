@@ -46,6 +46,10 @@ public class Question {
     public int getType(){
         return this.type;
     }
+
+    public int getCorrect(){return this.correct;}
+
+    public int getId(){return this.id;}
     // constructor for saq
     public Question(String question, String topic, int type, String answer) {
         this.question = question;
