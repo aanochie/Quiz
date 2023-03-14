@@ -2,54 +2,44 @@ package csc1035.project2;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Listing {
-    private List<ArrayList> questions;
-    // Create a List object to store the Question object
+public class QuestionManager {
+    private List<Question> questions = new ArrayList<>(); // 创建一个List对象用于存储Question对象
 
-    public Listing() {
-        questions = new ArrayList<>();
-        // Initialize the List object
+
+    public void addQuestion(Question question) {
+        questions.add(question); // 将Question对象添加到List对象中
     }
 
-    public void addQuestion(ArrayList question) {
-        questions.add(question);
-        // Add the Question object to the List object
+    public List<Question> getAllQuestions() {
+        return questions; // 返回存储所有Question对象的List对象
     }
 
-    public List<ArrayList> getAllQuestions() {
-        return questions;
-        // Returns a List object that stores all Question objects
-    }
+    public List<Question> getQuestionsByType(QuestionType type) {
+        List<Question> questionsByType = new ArrayList<>(); // 创建一个新的List对象用于存储指定类型的Question对象
 
-    public List<ArrayList> getQuestionsByType(QuestionType type) {
-        List<ArrayList> questionsByType = new ArrayList<>();
-        // Create a new List object to store the specified type of Question object
-
-        for (ArrayList question : questions) {
-            if (question.getType() == type) {
-                // If the type of the Question object is the same as the specified type
-                questionsByType.add(question);
-                // Add the Question object to the new List object
+        for (Question question : questions) {
+            if (question.getType() == type) { // 如果Question对象的类型与指定类型相同
+                questionsByType.add(question); // 将Question对象添加到新的List对象中
             }
         }
 
-        return questionsByType;
-        // Returns a List object that stores the Question object of the specified type
+        return questionsByType; // 返回存储指定类型的Question对象的List对象
     }
 
-    public List<ArrayList> getQuestionsByTopic(String topic) {
-        List<ArrayList> questionsByTopic = new ArrayList<>();
-        // Create a new List object to store the Question object for the specified topic
+    public List<Question> getQuestionsByTopic(String topic) {
+        List<Question> questionsByTopic = new ArrayList<>(); // 创建一个新的List对象用于存储指定主题的Question对象
 
-        for (ArrayList question : questions) {
-            if (question.getTopic().equals(topic)) {
-                // If the topic of the Question object is the same as the specified topic
-                questionsByTopic.add(question);
-                // Add the Question object to the new List object
+        for (Question question : questions) {
+            if (question.getTopic().equals(topic)) { // 如果Question对象的主题与指定主题相同
+                questionsByTopic.add(question); // 将Question对象添加到新的List对象中
             }
         }
 
-        return questionsByTopic;
-        // Returns a List object that stores the Question object of the specified topic
+        return questionsByTopic; // 返回存储指定主题的Question对象的List对象
+    }
+
+    public static int getType(int a,int b){
+
+
     }
 }

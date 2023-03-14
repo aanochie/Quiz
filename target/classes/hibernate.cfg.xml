@@ -14,7 +14,7 @@
         <property name="format_sql">true</property>
         <property name="hbm2ddl.auto">update </property>
 
-        <mapping class="csc1035.project2.Question" /> <!--- Add a new mapping class for a new table in the database -->
+        <mapping class="csc1035.project2.QuestionTable" /> <!--- Add a new mapping class for a new table in the database -->
 
     </session-factory>
 </hibernate-configuration>
