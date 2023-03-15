@@ -97,24 +97,31 @@ public class QuizIO {
         // From here generate quiz using Quiz class
         List<Integer> generatedQuestionsId = new ArrayList<>();
         Listing listing = new Listing();
-        listing.generatedQuestions(topic, type, incorrectQuestions, quizLength);
+        System.out.println(listing.generatedQuestions(topic, type, incorrectQuestions, 1));
         Quiz quiz = new Quiz(generatedQuestionsId);
         quiz.save();
 
     }
+    public static void main(String[] args){
+        QuizIO.run();
+    }
     // Generate quiz
     /*
-    * Need a list of generated question ids
-    * Take each id and create a quiz object
-    * In quiz class should have constructor which takes a list of ids(int) as a parameter
-    * For each id in the list map to respective qid_n
-    * generatedQuestionId
-    * Quiz(List<Integer> generatedQuestionId)
-    * Needs to get questions by type, topic and incorrect
-    * For length take the list generated, mysql query should include LIMIT 5/10/15/20
-    * We have Listing.getQuestionByTopic Listing.getQuestionByType
-    * Both return list of Question
-    * Need Listing.generatedQuestionsId return List of Questions id
+    *Create random list method
+    * should take a list of all questions and return a list of random questions
+    * list size should be the same size as the quizLength
+    * for loop to iterate through list randomly could make the list a set.
+    * Set allows for non-repeating qIds.
+    * for(i=0; i<limit; i++){
+    *   Set.add(random.nextInt(allQuestions.size()-1)
+    * }
+    * Check theme settings so you know what theme to apply to intellij
+    * What if random nextInt gets a number that is already in the Set
+    * Could generate a set of random ints which are in the bounds of
+    * the allQuestions list. Store this in an array
+    * for(i=0, j=0; i<limit && j<limit; i++, j++){
+    *   Set.add(allQuestions.get(randArray.get(j))
+    * }
     *
     * */
 }

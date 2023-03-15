@@ -93,9 +93,13 @@ public class Quiz {
             try{
                 fields[j].setAccessible(true);
                 fields[j].set(this, generatedQuestionId.get(i));
+                if(j-2>i){
+                    fields[j].set(this, null);
+                }
             }catch(IllegalAccessException e){
                 System.out.println("Illegal Access Exception");
             }
+
         }
         this.score = 0;
     }
