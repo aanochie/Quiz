@@ -3,9 +3,12 @@ package csc1035.project2;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
 
 public class Main {
     public static void main(String[] args) {
+        java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.SEVERE);
+
         boolean running = true;
         while (running) {
             Scanner myScanner = new Scanner(System.in);

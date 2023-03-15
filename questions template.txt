@@ -1,0 +1,104 @@
+Architecture
+MCQs
+As of 2023, what is the tallest building in the world with a height of 828 metres?|Burj Khalifa|Shanghai Tower|One World Trade Center|Lotte World Tower
+What is the name of the Nobel prize given for Architecture?|Pritzker Architecture Model|Royal Gold Medal|LEAF Award|Stirling Prize
+In which country you can visit Giza Pyramid Complex?|Egypt|Morocco|Algeria|Sudan
+The design of the Sydney Opera House in Australia is inspired by what?|Boat sails|Seashells|Glaciers|Building arches
+Which style of architecture emerged in the 1970s under the influence of technology?|High tech|Deconstruction|Futurism|Neo-futurist
+Which of the following palaces was not designed in the Rococo style?|Potala Palace|Sanssouci Palace|Catherine Palace|Palace of Versailles
+What is the most common nickname for the Eiffel Tower in Paris, France?|The Iron Lady|The Shard|The Big Pillar|Hope Tower
+Moorish architecture is a type of architecture associated with which religion?|Islam|Roman Catholicism|Hinduism|Buddhism
+Which eclectic and rebellious style of architecture challenged the restricting standards of modern architecture when it was first introduced in the 1960s?|Postmodern architecture|Contemporary architecture|Futuristic architecture|Baroque architecture
+Which style of architecture is characterised by blocky, monolithic, and massive looks with large-scale use of poured concrete and rigid geometric style?|Brutalism|Vandalism|Cruelism|Romanticism
+
+SAQs
+Who was the first architect to introduce the classical architecture of Rome and the Italian renaissance to Britain?|Inigo Jones
+What name is given to the wedge-shaped stone piece at the apex of a masonry arch?|Keystone
+Which world capital city was chosen as a UNESCO World Heritage Site due to its modernist architecture?|Brasilia
+What kind of structure is the Washington Monument in the United States?|Obelisk
+The academic style of architecture Beaux-Arts originated in which country?|France
+The Amalienborg, which was built in the Rococo style, is the residence of the royal family in which country?|Denmark
+The Parthenon in Greece was built in dedication to which ancient goddess?|Athena
+Which building is regarded by most as the best example of Mughal architecture?|Taj Mahal
+London's shard was designed by which architect?|Renzo Piano
+"La Sagrada Familia" in Barcelona is the main work of which architect?|Antoni Gaudi
+
+Mathematics
+MCQs
+What is the highest common factor of 30 and 132?|6|23|2|4
+Solve the following equation for x: -15 + (-5x) = 0?|-3|3|5|0
+What is the volume of a cube with 5cm edges?|125cm³|25cm³|75cm³|50cm³
+What is (5 x 2 x 5/25 -5)?|2.5|5.5|2.56|2
+Which prime number is closest to 100?|101|99|103|98
+What is 30% of 2450?|735|835|725|875
+How many seconds are there in 12 minutes?|720|640|760|540
+What is the mean of 12, 14, 19, 27 and 53?|25|23.5|27|24.5
+What is the square root of 484?|22|23|12|14
+What does the following equal (6 - 1 x 0 + 3 ÷ 3)?|7|11|9|6
+
+SAQs
+How many edges are in a tetrahedron?|4
+What is the name for an angle which is greater than 180⁰ and smaller than 360⁰?|Reflex
+What is 24 ÷ 3(5 + 3)?|1
+What is the value of each interior angle of a pentagon?|108
+If y = 10x − 1 and the value of x = 15, what is the value of y?|149
+What is the value of pi to three decimal places?|3.141
+What is the name of a triangle that has two sides of the same length?|Isosceles
+A car travels at a rate of 75 kilometres per hour. How many meters will the car travel in 60 seconds?|1250
+How many seconds are there in a day?|86400
+What is the name a parallelogram which has sides of equal length?|Rhombus
+
+Programming
+MCQs
+What does HTML stand for?|Hyper Text Markup Language|Hyper Trainer Marketing Language|Hyper Text Marketing Language|Hyper Text Markup Leveler
+What is the correct syntax for creating a string in Java?|String "Text";|String text ='text'.|String text ="text":|String text ="text";
+Which of the following programming language can be both object orientated or procedural/functional?|Python|Java|Smalltalk|C#
+Which class library would you import to obtain user inputs in Java?|java.util.scanner|java.lang|java.util.list|java.util.random
+What is the name of the process finding errors and fixing them within a program?|Debugging|Executing|Compiling|Scanning
+Which of the following is not a loop in Programming?|IF/ELSE|WHILE|DO UNTIL|FOR
+How do you write the AND operator in Java?|&&|and|==|&
+Which of the following translates high level source code into machine code, creating an executable file?|Compiler|Converter|Interpreter|Translator
+What is the denary value of the following binary number? 0100|4|2|6|100
+Which Python library would you use to generate a random number?|Random|Time|Pandas|NumPy
+
+SAQs
+What is the denary value of the following binary number? 00010100|20
+What is the keyword used for defining a function in python?|def
+If the variables a = 45 and b = 37, what would be the output of the following line of Python code? print(a == b)|False
+Which data type is used for decimal numbers in Python?|float
+How many times will the following loop iterate in Python? for i in range (0, 7):|7
+What is the coding term for a blueprint used to create objects?|Class
+What is the Python keyword used to immediately exit or break away from a loop?|break 
+Assume that the variable x = 6, what would be output when the following code is executed? print(x > 5)|True
+What translates assembly language into machine code?|Assembler
+What is the operator used to define or compare if two variables are equal in Python?|==
+
+Databases 
+MCQs
+What type of diagrams are used to depict relationships between databases and it's data objects?|Entity Relationship Diagram|Mapping Diagram|Scalar Draph Diagram|Flow chart Diagram
+Which schema represents where the user can view or access the databases?|External|Internal|Conceptual|Physical
+What do rectangles represent in Entity Relation Diagrams?|Entities|Keys|Attributes|Relationships
+Which of the following is not a relationship type between entities?|double to many|1 to 1|1 to many|many to many
+Which keyword is used to describe the number of entities participating in a relationship?|Degree|Primary key|Composite key|Schema
+What does DBMS stand for?|Database Management System|Database Merge Structure|Data binary Management Services|Database Manipulating Structure 
+What does SQL stand for?|Structured Query Language|Sorted Query Language|Structured Quick Language|Structured Quick Launch
+Which of the following is a logical database structure?|Tree|Network|Chain|Graph
+Which of the following is used to define a unique attribute of an entity?|Primary key|Composite key|Candidate key|Relationship
+Which of the following is not a DBMS?|PyCharm|MySQL|MariaDB|Amazon Aurora
+
+SAQs
+What is the key word which is used in a query to create a new table?|CREATE
+What shape is used to represent a relationship in an Entity relationship Diagram?|Diamond
+What name is used for the concept describing a relationship between two entities being observed or monitored by an external entity/entities?|Aggregation
+How many normal forms are there in a database?|3
+Which SQL keyword is used to access or to obtain data from a table?|SELECT
+What language is used to interact with databases?|SQL
+What type of the relationship describes the following scenario? "The school A only has a one principle x and the principle x only manages the school A"|1 to 1
+What type of a key is used to refer to an entity from another table in a relationship?|Foreign
+Which SQL keyword is used to edit fields in a table?|ALTER
+Which normal form states that a relation cannot contain a composite or multi-valued attribute?|first
+
+
+
+
+

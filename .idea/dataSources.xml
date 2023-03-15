@@ -19,5 +19,12 @@ H:/Work/1035/project 2/group project/src/main/resources/hibernate.cfg.xml</remar
       <jdbc-url>jdbc:mysql://cs-db.ncl.ac.uk/csc1035_team45</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="csc1035_team45@localhost" uuid="78710e6a-b1a3-45f5-b3df-e62336e05286">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/csc1035_team45</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
