@@ -2,8 +2,8 @@ package csc1035.project2;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
+import java.util.*;
 
 public class Listing {
     private List<Question> allQuestions = new ArrayList<>();
@@ -41,20 +41,6 @@ public class Listing {
         // Returns a List object that stores the Question object of the specified type
     }
 
-    public List<Question> getIncorrectQuestions() {
-        List<Question> incorrectQuestions = new ArrayList<>();
-        // Create a new List object to store the specified type of Question object
-        for (Question question : allQuestions) {
-            if (question.getType() == 1) {
-                // If the type of the Question object is the same as the specified type
-                incorrectQuestions.add(question);
-                // Add the Question object to the new List object
-            }
-        }
-        return incorrectQuestions;
-        // Returns a List object that stores the Question object of the specified type
-    }
-
     public List<Question> getQuestionsByTopic(String topic) {
         List<Question> questionsByTopic = new ArrayList<>();
         // Create a new List object to store the Question object for the specified topic
@@ -82,7 +68,6 @@ public class Listing {
         generatedQuestionsId = query.list();
         session.getTransaction().commit();
         session.close();
-        
         /*
         for (Question q : getAllQuestions()){
             if(q.getTopic().equals(topic) && q.getType() == type && q.getCorrect() == correct){
@@ -99,17 +84,48 @@ public class Listing {
             }
         }
         */
-        
         return generatedQuestionsId;
+    }
+
+    public List<Integer> randomQuestionIds(int limit){
+        // Set to store distinct question ids
+        Set<Integer> ranQuestionsIdSet = new HashSet<Integer>();
+        // List to store distinct question ids from set of question ids
+        List<Integer> ranQuestionsIdList = new ArrayList<>();
+
+        // List to get index of random integers in the set
+        List<Integer> randomIndexList = new ArrayList<>();
+        // Set to store distinct random integers
+        Set<Integer> randomIndexesSet = new HashSet<>();
+
+        // Adds distinct random integers to randomIndex list and set given limit.
+        // Limit determines how many random numbers to generate
+        while (randomIndexesSet.size() < limit){
+            // Creates random number from 0 to amount of questions in Question table
+            int rand = (int) (Math.random() * allQuestions.size());
+            if(!randomIndexesSet.contains(rand)) {
+                randomIndexesSet.add(rand);
+                randomIndexList.add(rand);
+            }
+        }
+        // Gets the question id from Questions using randomIndexList as the index
+        for (int i=0; i < limit; i++){
+            int questionId = allQuestions.get(randomIndexList.get(i)).getId();
+            if(!ranQuestionsIdSet.contains(questionId)){
+                ranQuestionsIdSet.add(questionId);
+                ranQuestionsIdList.add(questionId);
+            }
+        }
+        return ranQuestionsIdList;
     }
 
    public static void main(String[] args){
         Listing listing = new Listing();
-        // listing.topicQuery("maths");
-        // listing.typeQuery(2);
-        // System.out.println(listing.generatedQuestions("maths", 1, 0, 10));
-        // System.out.println(listing.getAllQuestions().get(0).getId());
-        System.out.println(listing.allQuestions);
+        //listing.topicQuery("maths");
+        //listing.typeQuery(2);
+       //System.out.println(listing.generatedQuestions("maths", 1, 0, 3).size());
+       //System.out.println(listing.getAllQuestions().get(0).getId());
+       System.out.println(listing.randomQuestionIds(10));
    }
 
 
