@@ -224,6 +224,11 @@ public class Quiz {
 
     }
 
+    public static void newRow() {
+        Quiz addRow = new Quiz();
+        addRow.save();
+    }
+
     public void save() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
