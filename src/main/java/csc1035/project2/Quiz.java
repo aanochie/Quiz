@@ -177,5 +177,14 @@ public class Quiz {
         session.save(this);
         session.getTransaction().commit();
     }
+
+    public void setScore(Integer score){
+        this.score =score;
+    }
+
+    public int getID(){
+        return this.id;
+    }
+
 }
 
