@@ -1,15 +1,17 @@
 package csc1035.project2;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class QuizIO {
-    public static void main(){
+    public static void run(){
         Scanner sc = new Scanner(System.in);
 
         // Topic option
         int topicChoice;
+        String topic = "";
         while(true) {
             System.out.println("""
                     Topic:
@@ -31,7 +33,6 @@ public class QuizIO {
             }
             break;
         }
-        String topic;
         switch(topicChoice) {
             case 1 -> topic = "programming"; //Can be changed to fit table requirements
             case 2 -> topic = "databases";
@@ -66,10 +67,10 @@ public class QuizIO {
         System.out.println("Would you like to make the quiz with questions previously answered incorrectly?");
         System.out.println("Enter y/yes or any other key for No");
         String incorrectQuestionsChoice = sc.nextLine();
-        boolean incorrectQuestions;
+        int incorrectQuestions = 0;
         if(incorrectQuestionsChoice.equalsIgnoreCase("y") ||
                 incorrectQuestionsChoice.equalsIgnoreCase("yes")){
-            incorrectQuestions = true;
+            incorrectQuestions = 1;
         }
 
         // Quiz length
@@ -94,6 +95,11 @@ public class QuizIO {
             break;
         }
         // From here generate quiz using Quiz class
+        List<Integer> generatedQuestionsId = new ArrayList<>();
+        Listing listing = new Listing();
+        listing.generatedQuestions(topic, type, incorrectQuestions, quizLength);
+        Quiz quiz = new Quiz(generatedQuestionsId);
+        quiz.save();
 
     }
     // Generate quiz
@@ -102,8 +108,13 @@ public class QuizIO {
     * Take each id and create a quiz object
     * In quiz class should have constructor which takes a list of ids(int) as a parameter
     * For each id in the list map to respective qid_n
+    * generatedQuestionId
+    * Quiz(List<Integer> generatedQuestionId)
+    * Needs to get questions by type, topic and incorrect
+    * For length take the list generated, mysql query should include LIMIT 5/10/15/20
+    * We have Listing.getQuestionByTopic Listing.getQuestionByType
+    * Both return list of Question
+    * Need Listing.generatedQuestionsId return List of Questions id
+    *
     * */
-    public static void generatingQuiz(){
-
-    }
 }
