@@ -4,21 +4,48 @@ import org.hibernate.Session;
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "Quizzes")
 public class Quiz {
     @Id
     @GeneratedValue
-    @Column(name = "id")
-    private int id; // primary key
+    @Column(name = "quiz_id")
+    private int quizId; // primary key
 
     @Column(name = "score")
     private int score; // Users previous score of set quiz
 
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "quiz_question",
+            joinColumns = { @JoinColumn(name = "quiz_id")},
+            inverseJoinColumns = {@JoinColumn(name = "question_id")}
+    )
+    private Set<Question> questions = new HashSet<>();
+
+    public int getQuizId(){
+        return this.quizId;
+    }
+
+    public int getScore(){
+        return this.score;
+    }
+
+    public Set<Question> getQuestions(){
+        return this.questions;
+    }
+
+    public void addQuestions(Set<Question> questionsSet){
+        questions.addAll(questionsSet);
+    }
+
+    public Quiz(Set<Question> quizQuestions){
+        this.questions = quizQuestions;
+
+    }
+/*
     @Column(name = "qid_1")
     private int qid_1; // question id 1 
 
@@ -78,13 +105,14 @@ public class Quiz {
 
     @Column(name = "qid_20")
     private int qid_20; // question id 20 - "-1" if 5/10/15 question quiz
-
+*/
 
 
     // 5 Question constructor
     // Quiz constructor to set generated questions
     // set this.qid_n = qid_n
     // Where qid_n comes from a list of generated questions id
+    /*
     public Quiz(List<Integer> generatedQuestionId) {
         Field[] fields = this.getClass().getDeclaredFields();
         // j is initialized as 2 so id and score are not counted in the loop
@@ -164,6 +192,7 @@ public class Quiz {
         this.qid_20 = qid_20;
         this.score = 0;
     }
+    */
 
 
     public Quiz() {

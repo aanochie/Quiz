@@ -1,18 +1,49 @@
 package csc1035.project2;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class QuizIO {
-    public static void run(){
+
+    public static int quizLength(){
+        int quizLength;
+        while (true) {
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Enter quiz length: 5, 10, 15, 20");
+            String quizLengthInput = sc.nextLine();
+
+            try {
+                quizLength = Integer.parseInt(quizLengthInput);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Enter number of questions to be generated");
+                continue;
+            }
+            List<Integer> validChoices = Arrays.asList(5, 10, 15, 20);
+            if (!validChoices.contains(quizLength)) {
+                System.out.println("Invalid input. Enter provided number of questions to be generated");
+                continue;
+            }
+            break;
+        }
+        return quizLength;
+    }
+
+    // Generates a quiz of random questions given the length of the quiz
+    public static void randomQuiz(){
+        int quizLength = quizLength();
+        Listing listing = new Listing();
+        Set<Question> randGeneratedQuestions = new HashSet<>(listing.randomQuestions(quizLength));
+        Quiz quiz = new Quiz(randGeneratedQuestions);
+        quiz.save();
+    }
+
+    // Generates a quiz of specified question type, topic, quizLength and option for incorrect questions
+    public static void specifiedQuiz() {
         Scanner sc = new Scanner(System.in);
 
         // Topic option
         int topicChoice;
         String topic = "";
-        while(true) {
+        while (true) {
             System.out.println("""
                     Topic:
                     1. Programming
@@ -27,13 +58,13 @@ public class QuizIO {
                 System.out.println("Invalid input. Please enter topic number.");
                 continue;
             }
-            if(topicChoice < 1 || topicChoice > 4){
+            if (topicChoice < 1 || topicChoice > 4) {
                 System.out.println("Invalid input. Please enter topic number.");
                 continue;
             }
             break;
         }
-        switch(topicChoice) {
+        switch (topicChoice) {
             case 1 -> topic = "programming"; //Can be changed to fit table requirements
             case 2 -> topic = "databases";
             case 3 -> topic = "architecture";
@@ -42,7 +73,7 @@ public class QuizIO {
 
         // Type selection
         int type;
-        while(true) {
+        while (true) {
             System.out.println("""
                     Type:
                     1. Multiple choice
@@ -50,13 +81,13 @@ public class QuizIO {
                     Enter type number:""");
             String typeInput = sc.nextLine();
             // Try block checks if integer is entered
-            try{
+            try {
                 type = Integer.parseInt(typeInput);
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input. Enter type number");
                 continue;
             }
-            if(type < 1 || type > 2){
+            if (type < 1 || type > 2) {
                 System.out.println("Invalid input. Enter type number");
                 continue;
             }
@@ -68,60 +99,28 @@ public class QuizIO {
         System.out.println("Enter y/yes or any other key for No");
         String incorrectQuestionsChoice = sc.nextLine();
         int incorrectQuestions = 0;
-        if(incorrectQuestionsChoice.equalsIgnoreCase("y") ||
-                incorrectQuestionsChoice.equalsIgnoreCase("yes")){
+        if (incorrectQuestionsChoice.equalsIgnoreCase("y") ||
+                incorrectQuestionsChoice.equalsIgnoreCase("yes")) {
             incorrectQuestions = 1;
         }
 
         // Quiz length
         // This can be ignored if user selects incorrect questions and there aren't enough questions
         // Needs to be discussed if we would like to implement functionality
-        int quizLength;
-        while (true) {
-            System.out.println("Enter quiz length: 5, 10, 15, 20");
-            String quizLengthInput = sc.nextLine();
-
-            try {
-                quizLength = Integer.parseInt(quizLengthInput);
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Enter number of questions to be generated");
-                continue;
-            }
-            List<Integer> validChoices = Arrays.asList(5, 10, 15, 20);
-            if(!validChoices.contains(quizLength)){
-                System.out.println("Invalid input. Enter provided number of questions to be generated");
-                continue;
-            }
-            break;
-        }
+        int quizLength = quizLength();
         // From here generate quiz using Quiz class
-        List<Integer> generatedQuestionsId = new ArrayList<>();
         Listing listing = new Listing();
-        System.out.println(listing.generatedQuestions(topic, type, incorrectQuestions, 1));
-        Quiz quiz = new Quiz(generatedQuestionsId);
+        listing.generatedQuestions(topic, type, incorrectQuestions, quizLength);
+        Set<Question> generatedQuestions = new HashSet<>(listing.generatedQuestions(topic, type, incorrectQuestions,
+                quizLength));
+        Quiz quiz = new Quiz();
+        quiz.addQuestions(generatedQuestions);
         quiz.save();
 
     }
-    public static void main(String[] args){
-        QuizIO.run();
+
+    public static void main(String[] args) {
+        QuizIO.randomQuiz();
     }
-    // Generate quiz
-    /*
-    *Create random list method
-    * should take a list of all questions and return a list of random questions
-    * list size should be the same size as the quizLength
-    * for loop to iterate through list randomly could make the list a set.
-    * Set allows for non-repeating qIds.
-    * for(i=0; i<limit; i++){
-    *   Set.add(random.nextInt(allQuestions.size()-1)
-    * }
-    * Check theme settings so you know what theme to apply to intellij
-    * What if random nextInt gets a number that is already in the Set
-    * Could generate a set of random ints which are in the bounds of
-    * the allQuestions list. Store this in an array
-    * for(i=0, j=0; i<limit && j<limit; i++, j++){
-    *   Set.add(allQuestions.get(randArray.get(j))
-    * }
-    *
-    * */
 }
+
