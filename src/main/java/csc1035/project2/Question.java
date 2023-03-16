@@ -4,6 +4,8 @@ import org.hibernate.Session;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "Questions")
@@ -38,6 +40,13 @@ public class Question {
     @Column(name = "correct")
     private int correct; // did the user get this question right the last time they attempted it
     // 1 if wrong last time, 2 if correct last time, 0 if never attempted
+
+    @ManyToMany(mappedBy = "questions", cascade = CascadeType.ALL)
+    private Set<Quiz> quizzes = new HashSet<>();
+
+    public Set<Quiz> getQuizzes() {
+        return quizzes;
+    }
 
     public String getTopic(){
         return this.topic;

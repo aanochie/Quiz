@@ -1,24 +1,51 @@
 package csc1035.project2;
 import org.hibernate.Session;
-import javax.persistence.*;
-import java.lang.reflect.Field;
-import java.util.List;
 
-/**
- * This class represents a table called "Quiz", which holds space for a unique quiz id, each question id and the most recent score achieved.
- * @author nasimhannan
- */
+import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import java.lang.reflect.Field;
+import java.util.*;
+
 @Entity
 @Table(name = "Quizzes")
 public class Quiz {
     @Id
     @GeneratedValue
-    @Column(name = "id")
-    private int id; // primary key
+    @Column(name = "quiz_id")
+    private int quizId; // primary key
 
     @Column(name = "score")
     private int score; // Users previous score of set quiz
 
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "quiz_question",
+            joinColumns = { @JoinColumn(name = "quiz_id")},
+            inverseJoinColumns = {@JoinColumn(name = "question_id")}
+    )
+    private Set<Question> questions = new HashSet<>();
+
+    public int getQuizId(){
+        return this.quizId;
+    }
+
+    public int getScore(){
+        return this.score;
+    }
+
+    public Set<Question> getQuestions(){
+        return this.questions;
+    }
+
+    public void addQuestions(Set<Question> questionsSet){
+        questions.addAll(questionsSet);
+    }
+
+    public Quiz(Set<Question> quizQuestions){
+        this.questions = quizQuestions;
+
+    }
+/*
     @Column(name = "qid_1")
     private int qid_1; // question id 1 
 
@@ -78,16 +105,14 @@ public class Quiz {
 
     @Column(name = "qid_20")
     private int qid_20; // question id 20 - "-1" if 5/10/15 question quiz
+*/
 
 
-    /**
-     * This constructor makes up for a 5-question quiz and assigns each question to its specific id
-     * @param generatedQuestionId
-     */
     // 5 Question constructor
     // Quiz constructor to set generated questions
     // set this.qid_n = qid_n
     // Where qid_n comes from a list of generated questions id
+    /*
     public Quiz(List<Integer> generatedQuestionId) {
         Field[] fields = this.getClass().getDeclaredFields();
         // j is initialized as 2 so id and score are not counted in the loop
@@ -107,19 +132,7 @@ public class Quiz {
         this.score = 0;
     }
 
-    /**
-     * This constructor makes up for a 10-question quiz and assigns each question to its specific id
-     * @param qid_1
-     * @param qid_2
-     * @param qid_3
-     * @param qid_4
-     * @param qid_5
-     * @param qid_6
-     * @param qid_7
-     * @param qid_8
-     * @param qid_9
-     * @param qid_10
-     */
+
     // 10 Question constructor
     public Quiz(int qid_1, int qid_2, int qid_3, int qid_4, int qid_5, int qid_6, int qid_7, int qid_8, int qid_9, int qid_10) {
         this.qid_1 = qid_1;
@@ -135,24 +148,6 @@ public class Quiz {
         this.score = 0;
     }
 
-    /**
-     * This constructor makes up for a 15-question quiz and assigns each question to its specific id
-     * @param qid_1
-     * @param qid_2
-     * @param qid_3
-     * @param qid_4
-     * @param qid_5
-     * @param qid_6
-     * @param qid_7
-     * @param qid_8
-     * @param qid_9
-     * @param qid_10
-     * @param qid_11
-     * @param qid_12
-     * @param qid_13
-     * @param qid_14
-     * @param qid_15
-     */
     // 15 Question constructor
     public Quiz(int qid_1, int qid_2, int qid_3, int qid_4, int qid_5, int qid_6, int qid_7, int qid_8, int qid_9, int qid_10, int qid_11, int qid_12, int qid_13, int qid_14, int qid_15) {
         this.qid_1 = qid_1;
@@ -173,29 +168,6 @@ public class Quiz {
         this.score = 0;
     }
 
-    /**
-     * This constructor makes up for a 20-question quiz and assigns each question to its specific id
-     * @param qid_1
-     * @param qid_2
-     * @param qid_3
-     * @param qid_4
-     * @param qid_5
-     * @param qid_6
-     * @param qid_7
-     * @param qid_8
-     * @param qid_9
-     * @param qid_10
-     * @param qid_11
-     * @param qid_12
-     * @param qid_13
-     * @param qid_14
-     * @param qid_15
-     * @param qid_16
-     * @param qid_17
-     * @param qid_18
-     * @param qid_19
-     * @param qid_20
-     */
     // 20 Question constructor
     public Quiz(int qid_1, int qid_2, int qid_3, int qid_4, int qid_5, int qid_6, int qid_7, int qid_8, int qid_9, int qid_10, int qid_11, int qid_12, int qid_13, int qid_14, int qid_15, int qid_16, int qid_17, int qid_18, int qid_19, int qid_20) {
         this.qid_1 = qid_1;
@@ -220,17 +192,16 @@ public class Quiz {
         this.qid_20 = qid_20;
         this.score = 0;
     }
+    */
 
-    /**
-     * This constructor makes up for an empty quiz entry to prevent errors and clashes
-     */
+
     public Quiz() {
 
     }
 
-    public static void newRow() {
-        Quiz addRow = new Quiz();
-        addRow.save();
+    public static void main(String[] args) {
+        //Quiz first_quiz = new Quiz(1, 2, 3, 4, 5);
+        //first_quiz.save();
     }
 
     public void save() {
@@ -239,14 +210,5 @@ public class Quiz {
         session.save(this);
         session.getTransaction().commit();
     }
-
-    public void setScore(Integer score){
-        this.score =score;
-    }
-
-    public int getID(){
-        return this.id;
-    }
-
 }
 
