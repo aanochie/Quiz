@@ -199,11 +199,6 @@ public class Quiz {
 
     }
 
-    public static void main(String[] args) {
-        //Quiz first_quiz = new Quiz(1, 2, 3, 4, 5);
-        //first_quiz.save();
-    }
-
     public void save() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
