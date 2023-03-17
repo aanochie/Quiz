@@ -20,19 +20,19 @@ public class Quiz {
     private int score; // Users previous score of set quiz
 
     @Column(name = "qid_1")
-    private int qid_1; // question id 1 
+    private int qid_1; // question id 1
 
     @Column(name = "qid_2")
-    private int qid_2; // question id 2 
+    private int qid_2; // question id 2
 
     @Column(name = "qid_3")
-    private int qid_3; // question id 3 
+    private int qid_3; // question id 3
 
     @Column(name = "qid_4")
-    private int qid_4; // question id 4 
+    private int qid_4; // question id 4
 
     @Column(name = "qid_5")
-    private int qid_5; // question id 5 
+    private int qid_5; // question id 5
 
     @Column(name = "qid_6")
     private int qid_6; // question id 6 - "-1" if 5 question quiz
@@ -224,6 +224,11 @@ public class Quiz {
 
     }
 
+    public static void newRow() {
+        Quiz addRow = new Quiz();
+        addRow.save();
+    }
+
     public void save() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
@@ -240,4 +245,3 @@ public class Quiz {
     }
 
 }
-

@@ -6,9 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="CSC1035_Team45_project2_22-23" />
         <module name="csc1035-project-2" />
-        <module name="group project" />
       </profile>
     </annotationProcessing>
   </component>
