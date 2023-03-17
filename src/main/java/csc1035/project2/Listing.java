@@ -4,6 +4,7 @@ import org.hibernate.query.Query;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Listing {
     private List<Question> allQuestions = new ArrayList<>();
@@ -85,6 +86,19 @@ public class Listing {
         }
         */
         return generatedQuestionsId;
+    }
+
+    public List<Integer> randomQuestions(int limit){
+        Random random = new Random();
+        List<Integer> idList = new ArrayList<>();
+        List<Integer> randomList = new ArrayList<>();
+        for (Question question:allQuestions ) {
+            idList.add(question.getId());
+        }
+
+
+
+
     }
 
    public static void main(String[] args){
