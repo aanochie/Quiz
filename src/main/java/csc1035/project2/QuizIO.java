@@ -4,6 +4,7 @@ import java.util.*;
 
 public class QuizIO {
 
+    // Method to get quiz length
     public static int quizLength(){
         int quizLength;
         while (true) {
@@ -31,8 +32,8 @@ public class QuizIO {
     public static void randomQuiz(){
         int quizLength = quizLength();
         Listing listing = new Listing();
-        Set<Question> randGeneratedQuestions = new HashSet<>(listing.randomQuestions(quizLength));
-        Quiz quiz = new Quiz(randGeneratedQuestions);
+        List<Integer> randGeneratedQuestionsIdList = new ArrayList<>(listing.randomQuestionsId(quizLength));
+        Quiz quiz = new Quiz(randGeneratedQuestionsIdList);
         quiz.save();
     }
 
@@ -111,13 +112,15 @@ public class QuizIO {
         // From here generate quiz using Quiz class
         Listing listing = new Listing();
         listing.generatedQuestions(topic, type, incorrectQuestions, quizLength);
-        Set<Question> generatedQuestions = new HashSet<>(listing.generatedQuestions(topic, type, incorrectQuestions,
+        List<Integer> generatedQuestionsId = new ArrayList<>(listing.generatedQuestions(topic, type, incorrectQuestions,
                 quizLength));
-        Quiz quiz = new Quiz();
-        quiz.addQuestions(generatedQuestions);
+        Quiz quiz = new Quiz(generatedQuestionsId);
         quiz.save();
 
     }
+
+    // Method to get random specified quiz
+    // Need to take topic
 
     public static void main(String[] args) {
         QuizIO.randomQuiz();
