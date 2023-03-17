@@ -102,7 +102,6 @@ public class Question {
 
     }
 
-
     @Override
     public String toString() {
         if (type == 1) {
@@ -134,5 +133,4 @@ public class Question {
         session.saveOrUpdate(this);
         session.getTransaction().commit();
     }
-
 }
