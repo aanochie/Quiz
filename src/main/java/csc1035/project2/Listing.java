@@ -68,6 +68,7 @@ public class Listing {
         generatedQuestionsId = query.list();
         session.getTransaction().commit();
         session.close();
+        
         /*
         for (Question q : getAllQuestions()){
             if(q.getTopic().equals(topic) && q.getType() == type && q.getCorrect() == correct){
@@ -84,15 +85,17 @@ public class Listing {
             }
         }
         */
+        
         return generatedQuestionsId;
     }
 
    public static void main(String[] args){
         Listing listing = new Listing();
-        //listing.topicQuery("maths");
-        //listing.typeQuery(2);
-       System.out.println(listing.generatedQuestions("maths", 1, 0, 3).size());
-       //System.out.println(listing.getAllQuestions().get(0).getId());
+        // listing.topicQuery("maths");
+        // listing.typeQuery(2);
+        // System.out.println(listing.generatedQuestions("maths", 1, 0, 10));
+        // System.out.println(listing.getAllQuestions().get(0).getId());
+        System.out.println(listing.allQuestions);
    }
 
 

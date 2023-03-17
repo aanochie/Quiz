@@ -25,6 +25,7 @@ public class Main {
 
             switch (choice) {
                 case "1" -> QuestionIO.main();
+                case "2" -> QuestionIO.listingIO();
                 case "5" -> running = false;
             }
         }
