@@ -111,7 +111,7 @@ public class QuizIO {
         int quizLength = quizLength();
         // From here generate quiz using Quiz class
         Listing listing = new Listing();
-        int[] generatedQuestionsId = listing.generatedQuestions(topic, type, incorrectQuestions, quizLength);
+        int[] generatedQuestionsId = listing.randomQuestionsId(topic, type, incorrectQuestions, quizLength);
         // Converts Integer class into primitive type int
         Quiz quiz = new Quiz(generatedQuestionsId);
         quiz.save();
