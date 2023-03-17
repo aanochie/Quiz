@@ -3,7 +3,7 @@ package csc1035.project2;
 import java.util.*;
 
 public class QuizIO {
-
+    // Method to get quiz length from input
     // Method to get quiz length
     public static int quizLength(){
         int quizLength;
