@@ -61,6 +61,19 @@ public class Question {
     public String getQuestion(){return this.question;}
 
     public int getId(){return this.id;}
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
     // constructor for saq
     public Question(String question, String topic, int type, String answer) {
         this.question = question;
@@ -114,4 +127,12 @@ public class Question {
         session.save(this);
         session.getTransaction().commit();
     }
+
+    public void update() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.saveOrUpdate(this);
+        session.getTransaction().commit();
+    }
+
 }

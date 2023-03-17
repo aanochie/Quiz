@@ -81,16 +81,12 @@ public class QuestionIO {
         }
     }
 
-    public static void update() {
-
-    }
-
-    public static void delete() {
+    public static Question getQuestion(String action) {
         Listing listing = new Listing();
         List<Question> allQuestions = listing.getAllQuestions();
 
         if (allQuestions.size() == 0) {
-            return;
+            return null;
         }
 
         outputList(allQuestions);
@@ -98,7 +94,7 @@ public class QuestionIO {
         List<String> validChoices = Arrays.stream(IntStream.range(1, allQuestions.size() + 1).mapToObj(String::valueOf).toArray(String[]::new)).toList();
 
         Scanner myScanner = new Scanner(System.in);
-        System.out.println("Which question would you like to delete? Please enter its number:");
+        System.out.println("Which question would you like to " + action + "? Please enter its number:");
         String questionNumber = myScanner.nextLine();
 
         while (!validChoices.contains(questionNumber)) {
@@ -106,7 +102,65 @@ public class QuestionIO {
             questionNumber = myScanner.nextLine();
         }
 
-        Question questionObj = allQuestions.get(Integer.parseInt(questionNumber) - 1);
+        return allQuestions.get(Integer.parseInt(questionNumber) - 1);
+    }
+
+    public static void update() {
+        Scanner myScanner = new Scanner(System.in);
+
+        Question questionObj = getQuestion("update");
+
+        if (questionObj == null) {
+            return;
+        }
+
+        System.out.println("Which part would you like to update?\n1. Question\n2. Answer");
+        String choice = myScanner.nextLine();
+        while (!(choice.equals("1") || choice.equals("2"))) {
+            System.out.println("Invalid choice. Please enter either 1 or 2:");
+            choice = myScanner.nextLine();
+        }
+
+        switch (choice) {
+            case "1" -> updateQuestion(questionObj);
+            case "2" -> updateAnswer(questionObj);
+        }
+
+        System.out.println("Updated question:\n" + questionObj);
+    }
+
+    public static void updateQuestion(Question questionObj) {
+        Scanner myScanner = new Scanner(System.in);
+
+        System.out.println("Old question: " + questionObj.getQuestion());
+
+        System.out.println("Please enter the updated question:");
+        String newQuestion = myScanner.nextLine();
+
+        questionObj.setQuestion(newQuestion);
+        questionObj.update();
+    }
+
+    public static void updateAnswer(Question questionObj) {
+        Scanner myScanner = new Scanner(System.in);
+
+        System.out.println("Old answer: " + questionObj.getAnswer());
+
+        System.out.println("Please enter the updated answer:");
+        String newAnswer = myScanner.nextLine();
+
+        questionObj.setAnswer(newAnswer);
+        questionObj.update();
+    }
+
+    public static void delete() {
+        Scanner myScanner = new Scanner(System.in);
+
+        Question questionObj = getQuestion("delete");
+
+        if (questionObj == null) {
+            return;
+        }
 
         System.out.println(questionObj);
         System.out.println("Are you sure you want to delete this question?\n1. Yes\n2. No");
@@ -126,24 +180,31 @@ public class QuestionIO {
     }
 
     public static void listingIO() {
-        Scanner myScanner = new Scanner(System.in);
-        System.out.println("What would you like to list?\n1. All Questions\n2. Questions of a specific topic\n3. Questions of a specific type");
-        String choice = myScanner.nextLine();
+        boolean running = true;
+        while (running) {
+            Scanner myScanner = new Scanner(System.in);
+            System.out.println("What would you like to list?\n1. All Questions\n2. Questions of a specific topic\n3. Questions of a specific type\n4. Questions answered incorrectly\n5. Back");
+            String choice = myScanner.nextLine();
 
-        List<String> validChoices = Arrays.asList("1", "2", "3");
-        while (!validChoices.contains(choice)) {
-            System.out.println("Invalid choice. Please enter either 1, 2 or 3:");
-            choice = myScanner.nextLine();
+            List<String> validChoices = Arrays.asList("1", "2", "3", "4", "5");
+            while (!validChoices.contains(choice)) {
+                System.out.println("Invalid choice. Please enter either 1, 2, 3, 4 or 5:");
+                choice = myScanner.nextLine();
+            }
+
+            List<Question> questions = null;
+            switch (choice) {
+                case "1" -> questions = getAllQuestions();
+                case "2" -> questions = getQuestionsByTopic();
+                case "3" -> questions = getQuestionsByType();
+                case "4" -> questions = getIncorrectQuestions();
+                case "5" -> running = false;
+            }
+
+            if (!choice.equals("5")) {
+                outputList(questions);
+            }
         }
-
-        List<Question> questions = null;
-        switch (choice) {
-            case "1" -> questions = getAllQuestions();
-            case "2" -> questions = getQuestionsByTopic();
-            case "3" -> questions = getQuestionsByType();
-        }
-
-        outputList(questions);
     }
 
     public static void outputList(List<Question> questionList) {
@@ -178,6 +239,11 @@ public class QuestionIO {
         }
 
         return questions;
+    }
+
+    public static List<Question> getIncorrectQuestions() {
+        Listing listing = new Listing();
+        return listing.getIncorrectQuestions();
     }
 
     public static List<Question> getQuestionsByType() {
