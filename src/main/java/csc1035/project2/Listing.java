@@ -41,6 +41,20 @@ public class Listing {
         // Returns a List object that stores the Question object of the specified type
     }
 
+    public List<Question> getIncorrectQuestions() {
+        List<Question> incorrectQuestions = new ArrayList<>();
+        // Create a new List object to store the specified type of Question object
+        for (Question question : allQuestions) {
+            if (question.getType() == 1) {
+                // If the type of the Question object is the same as the specified type
+                incorrectQuestions.add(question);
+                // Add the Question object to the new List object
+            }
+        }
+        return incorrectQuestions;
+        // Returns a List object that stores the Question object of the specified type
+    }
+
     public List<Question> getQuestionsByTopic(String topic) {
         List<Question> questionsByTopic = new ArrayList<>();
         // Create a new List object to store the Question object for the specified topic
