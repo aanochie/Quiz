@@ -3,44 +3,10 @@ package csc1035.project2;
 import java.util.*;
 
 public class QuizIO {
-    // Method to get quiz length from input
-    // Method to get quiz length
-    public static int quizLength(){
-        int quizLength;
-        while (true) {
-            Scanner sc = new Scanner(System.in);
-            System.out.println("Enter quiz length: 5, 10, 15, 20");
-            String quizLengthInput = sc.nextLine();
 
-            try {
-                quizLength = Integer.parseInt(quizLengthInput);
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Enter number of questions to be generated");
-                continue;
-            }
-            List<Integer> validChoices = Arrays.asList(5, 10, 15, 20);
-            if (!validChoices.contains(quizLength)) {
-                System.out.println("Invalid input. Enter provided number of questions to be generated");
-                continue;
-            }
-            break;
-        }
-        return quizLength;
-    }
-
-    // Generates a quiz of random questions given the length of the quiz
-    public static void randomQuiz(){
-        int quizLength = quizLength();
-        Listing listing = new Listing();
-        int[] randGeneratedQuestionsIdArr = listing.randomQuestionsId(quizLength);
-        Quiz quiz = new Quiz(randGeneratedQuestionsIdArr);
-        quiz.save();
-    }
-
-    // Generates a quiz of specified question type, topic, quizLength and option for incorrect questions
-    public static void specifiedQuiz() {
+    // Method to get topic from input
+    public static String topic(){
         Scanner sc = new Scanner(System.in);
-
         // Topic option
         int topicChoice;
         String topic = "";
@@ -71,8 +37,12 @@ public class QuizIO {
             case 3 -> topic = "architecture";
             case 4 -> topic = "maths";
         }
+        return topic;
+    }
 
-        // Type selection
+    // Method to get type from input
+    public static int type(){
+        Scanner sc = new Scanner(System.in);
         int type;
         while (true) {
             System.out.println("""
@@ -94,7 +64,37 @@ public class QuizIO {
             }
             break;
         }
+        return type;
+    }
 
+
+    // Method to get quiz length from input
+    public static int quizLength(){
+        int quizLength;
+        while (true) {
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Enter quiz length: 5, 10, 15, 20");
+            String quizLengthInput = sc.nextLine();
+
+            try {
+                quizLength = Integer.parseInt(quizLengthInput);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Enter number of questions to be generated");
+                continue;
+            }
+            List<Integer> validChoices = Arrays.asList(5, 10, 15, 20);
+            if (!validChoices.contains(quizLength)) {
+                System.out.println("Invalid input. Enter provided number of questions to be generated");
+                continue;
+            }
+            break;
+        }
+        return quizLength;
+    }
+
+    // Method to specify incorrect questions option
+    public static int incorrect(){
+        Scanner sc = new Scanner(System.in);
         // Incorrect questions option
         System.out.println("Would you like to make the quiz with questions previously answered incorrectly?");
         System.out.println("Enter y/yes or any other key for No");
@@ -104,25 +104,136 @@ public class QuizIO {
                 incorrectQuestionsChoice.equalsIgnoreCase("yes")) {
             incorrectQuestions = 1;
         }
+        return incorrectQuestions;
+    }
 
-        // Quiz length
-        // This can be ignored if user selects incorrect questions and there aren't enough questions
-        // Needs to be discussed if we would like to implement functionality
+    // Method to specify quizLength when incorrect questions are selected
+    public static int incorrectQuizLength(int incorrectQuestions){
+        int quizLength;
+        if(incorrectQuestions == 0){
+            quizLength = quizLength();
+        } else {
+            // Set to 1 since it can not be null and quizLength is going to be ignored by Listing.randomQuestionsId()
+            quizLength = 1;
+        }
+        return quizLength;
+    }
+
+    // Generates a quiz of random questions given the length of the quiz
+    public static void randomQuiz(){
         int quizLength = quizLength();
-        // From here generate quiz using Quiz class
         Listing listing = new Listing();
-        int[] generatedQuestionsId = listing.randomQuestionsId(topic, type, incorrectQuestions, quizLength);
-        // Converts Integer class into primitive type int
+        int[] randGeneratedQuestionsIdArr = listing.randomQuestionsId(quizLength);
+        Quiz quiz = new Quiz(randGeneratedQuestionsIdArr);
+        quiz.save();
+    }
+
+    // Generates a quiz of random incorrect questions
+    public static void incorrectQuestionsQuiz(){
+        Listing listing = new Listing();
+        int[] randomIncorrectQuestions = listing.randomQuestionsIdIncorrect();
+        if(randomIncorrectQuestions.length == 0){
+            System.out.println("There are no previously answered incorrect questions");
+        } else {
+            Quiz quiz = new Quiz(randomIncorrectQuestions);
+            quiz.save();
+        }
+    }
+
+    // Generates a quiz of random questions given topic, length and option for incorrect questions
+    public static void specifiedQuizTopic(){
+        Scanner sc = new Scanner(System.in);
+
+        // Topic, incorrect questions option and quizLength selection
+        String topic = topic();
+        int incorrectQuestions = incorrect();
+        int quizLength = incorrectQuizLength(incorrectQuestions);
+
+        // Quiz generator
+        Listing listing = new Listing();
+        int[] generatedQuestionsId = listing.randomQuestionsId(topic, incorrectQuestions, quizLength);
         Quiz quiz = new Quiz(generatedQuestionsId);
         quiz.save();
 
     }
 
-    // Method to get random specified quiz
-    // Need to take topic
+    // Generates a qiz of random questions given type, length and option for incorrect questions
+    public static void specifiedQuizType(){
+        Scanner sc = new Scanner(System.in);
+
+        //Type, incorrect option and quiz length
+        int type = type();
+        int incorrectQuestions = incorrect();
+        int quizLength = incorrectQuizLength(incorrectQuestions);
+
+        // Quiz generator
+        Listing listing = new Listing();
+        int[] generatedQuestionsId = listing.randomQuestionsId(type, incorrectQuestions, quizLength);
+        Quiz quiz = new Quiz(generatedQuestionsId);
+        quiz.save();
+
+    }
+
+    // Generates a quiz of specified question type, topic, quizLength and option for incorrect questions
+    public static void specifiedQuizAll() {
+        Scanner sc = new Scanner(System.in);
+
+        // Topic, type and incorrect questions option
+        String topic = topic();
+        int type = type();
+        int incorrectQuestions = incorrect();
+        int quizLength = incorrectQuizLength(incorrectQuestions);
+
+        // Quiz generator
+        Listing listing = new Listing();
+        int[] generatedQuestionsId = listing.randomQuestionsId(topic, type, incorrectQuestions, quizLength);
+        Quiz quiz = new Quiz(generatedQuestionsId);
+        quiz.save();
+
+    }
+
+    // Menu to give user option for which quiz to generate
+    public static void main(){
+        Scanner sc = new Scanner(System.in);
+        int quizType;
+        while(true){
+            System.out.println("""
+                1. Generate random quiz.
+                2. Generate random quiz with all incorrect questions.
+                3. Generate quiz with specified topic.
+                4. Generate quiz with specified type.
+                5. Generate quiz with specified topic, type and/or incorrect questions.
+                6. Exit.""");
+
+            String inputChoice = sc.nextLine();
+            try {
+                quizType = Integer.parseInt(inputChoice);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Enter type number");
+                continue;
+            }
+            if (quizType < 1 || quizType > 6) {
+                System.out.println("Invalid input. Enter type number");
+                continue;
+            }
+            if (quizType == 6){
+                System.out.println("Exit.");
+                break;
+            }
+            break;
+        }
+        switch (quizType){
+            case 1 -> QuizIO.randomQuiz();
+            case 2 -> QuizIO.incorrectQuestionsQuiz();
+            case 3 -> QuizIO.specifiedQuizTopic();
+            case 4 -> QuizIO.specifiedQuizType();
+            case 5 -> QuizIO.specifiedQuizAll();
+        }
+
+    }
 
     public static void main(String[] args) {
-        QuizIO.randomQuiz();
+        QuizIO.main();
     }
 }
 
