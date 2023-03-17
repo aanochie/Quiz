@@ -41,6 +41,20 @@ public class Listing {
         // Returns a List object that stores the Question object of the specified type
     }
 
+    public List<Question> getIncorrectQuestions() {
+        List<Question> incorrectQuestions = new ArrayList<>();
+        // Create a new List object to store the specified type of Question object
+        for (Question question : allQuestions) {
+            if (question.getType() == 1) {
+                // If the type of the Question object is the same as the specified type
+                incorrectQuestions.add(question);
+                // Add the Question object to the new List object
+            }
+        }
+        return incorrectQuestions;
+        // Returns a List object that stores the Question object of the specified type
+    }
+
     public List<Question> getQuestionsByTopic(String topic) {
         List<Question> questionsByTopic = new ArrayList<>();
         // Create a new List object to store the Question object for the specified topic
@@ -68,6 +82,7 @@ public class Listing {
         generatedQuestionsId = query.list();
         session.getTransaction().commit();
         session.close();
+        
         /*
         for (Question q : getAllQuestions()){
             if(q.getTopic().equals(topic) && q.getType() == type && q.getCorrect() == correct){
@@ -84,15 +99,17 @@ public class Listing {
             }
         }
         */
+        
         return generatedQuestionsId;
     }
 
    public static void main(String[] args){
         Listing listing = new Listing();
-        //listing.topicQuery("maths");
-        //listing.typeQuery(2);
-       System.out.println(listing.generatedQuestions("maths", 1, 0, 3).size());
-       //System.out.println(listing.getAllQuestions().get(0).getId());
+        // listing.topicQuery("maths");
+        // listing.typeQuery(2);
+        // System.out.println(listing.generatedQuestions("maths", 1, 0, 10));
+        // System.out.println(listing.getAllQuestions().get(0).getId());
+        System.out.println(listing.allQuestions);
    }
 
 
