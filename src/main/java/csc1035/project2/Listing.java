@@ -45,7 +45,7 @@ public class Listing {
         List<Question> incorrectQuestions = new ArrayList<>();
         // Create a new List object to store the specified type of Question object
         for (Question question : allQuestions) {
-            if (question.getType() == 1) {
+            if (question.getCorrect() == 1) {
                 // If the type of the Question object is the same as the specified type
                 incorrectQuestions.add(question);
                 // Add the Question object to the new List object
