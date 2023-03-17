@@ -2,8 +2,8 @@ package csc1035.project2;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Listing {
     private List<Question> allQuestions = new ArrayList<>();
@@ -41,6 +41,20 @@ public class Listing {
         // Returns a List object that stores the Question object of the specified type
     }
 
+    public List<Question> getIncorrectQuestions() {
+        List<Question> incorrectQuestions = new ArrayList<>();
+        // Create a new List object to store the specified type of Question object
+        for (Question question : allQuestions) {
+            if (question.getCorrect() == 1) {
+                // If the type of the Question object is the same as the specified type
+                incorrectQuestions.add(question);
+                // Add the Question object to the new List object
+            }
+        }
+        return incorrectQuestions;
+        // Returns a List object that stores the Question object of the specified type
+    }
+
     public List<Question> getQuestionsByTopic(String topic) {
         List<Question> questionsByTopic = new ArrayList<>();
         // Create a new List object to store the Question object for the specified topic
@@ -55,57 +69,47 @@ public class Listing {
         // Returns a List object that stores the Question object of the specified topic
     }
 
-    public Set<Question> generatedQuestions(String topic, int type, int correct, int limit){
-        List<Question> generatedQuestionsList = new ArrayList<>();
+    public List<Integer> generatedQuestions(String topic, int type, int correct, int limit){
+        List<Integer> generatedQuestionsId = new ArrayList<>();
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
-        Query query = session.createQuery("from Question q where type= :type " +
+        Query query = session.createQuery("select q.id from Question q where type= :type " +
                 "and topic= :topic and correct= :correct").setMaxResults(limit);
         query.setParameter("type", type);
         query.setParameter("topic", topic);
         query.setParameter("correct", correct);
-        generatedQuestionsList = query.list();
+        generatedQuestionsId = query.list();
         session.getTransaction().commit();
         session.close();
-
-        return new HashSet<>(generatedQuestionsList);
-    }
-
-    public Set<Question> randomQuestions(int limit){
-        // Set to store distinct questions
-        Set<Question> ranQuestionsSet = new HashSet<Question>();
-
-        // List to get index of random integers in the set
-        List<Integer> randomIndexList = new ArrayList<>();
-        // Set to store distinct random integers
-        Set<Integer> randomIndexesSet = new HashSet<>();
-
-        // Adds distinct random integers to randomIndex list and set given limit.
-        // Limit determines how many random numbers to generate
-        while (randomIndexesSet.size() < limit){
-            // Creates random number from 0 to amount of questions in Question table
-            int rand = (int) (Math.random() * allQuestions.size());
-            if(!randomIndexesSet.contains(rand)) {
-                randomIndexesSet.add(rand);
-                randomIndexList.add(rand);
+        
+        /*
+        for (Question q : getAllQuestions()){
+            if(q.getTopic().equals(topic) && q.getType() == type && q.getCorrect() == correct){
+                generatedQuestionsId.add(q.getId());
             }
         }
-        // Gets the question id from Questions using randomIndexList as the index
-        for (int i=0; i < limit; i++){
-            Question question = allQuestions.get(randomIndexList.get(i));
-            ranQuestionsSet.add(question);
+         */
+
+        /*
+        for (int i = 0; i < getAllQuestions().size(); i++) {
+            if (getAllQuestions().get(i).getTopic().equals(topic) && getAllQuestions().get(i).getType() == type
+                    && getAllQuestions().get(i).getCorrect() == correct) {
+                generatedQuestionsId.add(getAllQuestions().get(i).getId());
+            }
         }
-        return ranQuestionsSet;
+        */
+        
+        return generatedQuestionsId;
     }
 
    public static void main(String[] args){
         Listing listing = new Listing();
-        //listing.topicQuery("maths");
-        //listing.typeQuery(2);
-       //System.out.println(listing.generatedQuestions("maths", 1, 0, 3).size());
-       //System.out.println(listing.getAllQuestions().get(0).getId());
-       System.out.println(listing.randomQuestions(10));
+        // listing.topicQuery("maths");
+        // listing.typeQuery(2);
+        // System.out.println(listing.generatedQuestions("maths", 1, 0, 10));
+        // System.out.println(listing.getAllQuestions().get(0).getId());
+        System.out.println(listing.allQuestions);
    }
 
 
