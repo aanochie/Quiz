@@ -105,7 +105,7 @@ public class Listing {
     // Takes in account whether there are enough questions of the same topic
     // If there are not enough questions, return how many questions there are
     // This can be handled in QuizIO
-    public int[] randomQuestionsIdTopic(String topic, int correct){
+    public int[] randomQuestionsId(String topic, int correct){
         List<Question> generatedQuestionsList;
         int[] generatedQuestionsIdArray;
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -128,7 +128,7 @@ public class Listing {
     // Takes in account whether there are enough questions of the same topic
     // If there are not enough questions, return how many questions there are
     // This can be handled in QuizIO
-    public int[] randomQuestionsIdType(String type, int correct){
+    public int[] randomQuestionsId(int type, int correct){
         List<Question> generatedQuestionsList;
         int[] generatedQuestionsIdArray;
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -155,9 +155,9 @@ public class Listing {
     }
 
     // Generates random distinct questions id given quiz length
-    public int[] randomQuestionsId(int limit) {
+    public int[] randomQuestionsId(int length) {
         // Set to store distinct questions
-        List<Integer> ranQuestionsIdList = new ArrayList<>(randomIndexList(limit, allQuestions));
+        List<Integer> ranQuestionsIdList = new ArrayList<>(randomIndexList(length, allQuestions));
         int[] ranQuestionsIdArr;
 
         // Converts generated list to array
@@ -197,8 +197,7 @@ public class Listing {
         //listing.typeQuery(2);
        //System.out.println(listing.generatedQuestions("maths", 1, 0, 3).size());
        //System.out.println(listing.getAllQuestions().get(0).getId());
-       System.out.println(Arrays.toString(listing.randomQuestionsId(10)));
+       System.out.println(Arrays.toString(listing.randomQuestionsId("maths", 0)));
    }
-
 
 }
