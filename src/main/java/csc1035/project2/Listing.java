@@ -65,26 +65,26 @@ public class Listing {
         // Returns a List object that stores the Question object of the specified topic
     }
 
-    public Set<Question> generatedQuestions(String topic, int type, int correct, int limit){
-        List<Question> generatedQuestionsList = new ArrayList<>();
+    public Set<Integer> generatedQuestions(String topic, int type, int correct, int limit){
+        List<Integer> generatedQuestionsIdList = new ArrayList<>();
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
-        Query query = session.createQuery("from Question q where type= :type " +
+        Query query = session.createQuery("select q.id from Question q where type= :type " +
                 "and topic= :topic and correct= :correct").setMaxResults(limit);
         query.setParameter("type", type);
         query.setParameter("topic", topic);
         query.setParameter("correct", correct);
-        generatedQuestionsList = query.list();
+        generatedQuestionsIdList = query.list();
         session.getTransaction().commit();
         session.close();
 
-        return new HashSet<>(generatedQuestionsList);
+        return new HashSet<>(generatedQuestionsIdList);
     }
 
-    public Set<Question> randomQuestions(int limit){
+    public Set<Integer> randomQuestionsId(int limit){
         // Set to store distinct questions
-        Set<Question> ranQuestionsSet = new HashSet<Question>();
+        Set<Integer> ranQuestionsIdSet = new HashSet<>();
 
         // List to get index of random integers in the set
         List<Integer> randomIndexList = new ArrayList<>();
@@ -103,10 +103,10 @@ public class Listing {
         }
         // Gets the question id from Questions using randomIndexList as the index
         for (int i=0; i < limit; i++){
-            Question question = allQuestions.get(randomIndexList.get(i));
-            ranQuestionsSet.add(question);
+            Integer questionId = allQuestions.get(randomIndexList.get(i)).getId();
+            ranQuestionsIdSet.add(questionId);
         }
-        return ranQuestionsSet;
+        return ranQuestionsIdSet;
     }
 
    public static void main(String[] args){
@@ -115,7 +115,7 @@ public class Listing {
         //listing.typeQuery(2);
        //System.out.println(listing.generatedQuestions("maths", 1, 0, 3).size());
        //System.out.println(listing.getAllQuestions().get(0).getId());
-       System.out.println(listing.randomQuestions(10));
+       System.out.println(listing.randomQuestionsId(10));
    }
 
 
