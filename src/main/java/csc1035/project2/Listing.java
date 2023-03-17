@@ -65,8 +65,9 @@ public class Listing {
         // Returns a List object that stores the Question object of the specified topic
     }
 
-    public List<Integer> generatedQuestions(String topic, int type, int correct, int limit){
+    public int[] generatedQuestions(String topic, int type, int correct, int limit){
         List<Integer> generatedQuestionsIdList = new ArrayList<>();
+        int[] generatedQuestionsIdArr;
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
@@ -79,12 +80,15 @@ public class Listing {
         session.getTransaction().commit();
         session.close();
 
-        return generatedQuestionsIdList;
+        generatedQuestionsIdArr = generatedQuestionsIdList.stream().mapToInt(i -> i).toArray();
+
+        return generatedQuestionsIdArr;
     }
 
-    public List<Integer> randomQuestionsId(int limit) {
+    public int[] randomQuestionsId(int limit) {
         // Set to store distinct questions
         List<Integer> ranQuestionsIdList = new ArrayList<>();
+        int[] ranQuestionsIdArr;
 
         // List to get index of random integers in the set
         List<Integer> randomIndexList = new ArrayList<>();
@@ -106,7 +110,9 @@ public class Listing {
             Integer questionId = allQuestions.get(randomIndexList.get(i)).getId();
             ranQuestionsIdList.add(questionId);
         }
-        return ranQuestionsIdList;
+        // Converts generated list to array
+        ranQuestionsIdArr = ranQuestionsIdList.stream().mapToInt(i -> i).toArray();
+        return ranQuestionsIdArr;
     }
 
    public static void main(String[] args){

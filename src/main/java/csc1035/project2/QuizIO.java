@@ -32,8 +32,7 @@ public class QuizIO {
     public static void randomQuiz(){
         int quizLength = quizLength();
         Listing listing = new Listing();
-        List<Integer> listingRandomQuestions = listing.randomQuestionsId(quizLength);
-        int[] randGeneratedQuestionsIdArr = listingRandomQuestions.stream().mapToInt(i -> i).toArray();
+        int[] randGeneratedQuestionsIdArr = listing.randomQuestionsId(quizLength);
         Quiz quiz = new Quiz(randGeneratedQuestionsIdArr);
         quiz.save();
     }
@@ -112,10 +111,9 @@ public class QuizIO {
         int quizLength = quizLength();
         // From here generate quiz using Quiz class
         Listing listing = new Listing();
-        List<Integer> listingQuestions = listing.generatedQuestions(topic, type, incorrectQuestions, quizLength);
+        int[] generatedQuestionsId = listing.generatedQuestions(topic, type, incorrectQuestions, quizLength);
         // Converts Integer class into primitive type int
-        int[] generatedQuestionsIdArr = listingQuestions.stream().mapToInt(i -> i).toArray();
-        Quiz quiz = new Quiz(generatedQuestionsIdArr);
+        Quiz quiz = new Quiz(generatedQuestionsId);
         quiz.save();
 
     }
