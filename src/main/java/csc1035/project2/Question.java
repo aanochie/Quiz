@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -55,6 +56,10 @@ public class Question {
 
     public int getId(){return this.id;}
 
+    public String getAnswer() {
+        return answer;
+    }
+
     public void setQuestion(String question) {
         this.question = question;
     }
@@ -63,8 +68,8 @@ public class Question {
         this.answer = answer;
     }
 
-    public String getAnswer() {
-        return answer;
+    public void setCorrect(int val) {
+        this.correct = val;
     }
 
     // constructor for saq
@@ -125,5 +130,9 @@ public class Question {
         session.beginTransaction();
         session.saveOrUpdate(this);
         session.getTransaction().commit();
+    }
+
+    public List<String> getAnswers() {
+        return List.of(new String[]{answer, other1, other2, other3});
     }
 }

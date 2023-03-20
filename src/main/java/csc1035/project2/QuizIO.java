@@ -1,5 +1,7 @@
 package csc1035.project2;
 
+import org.hibernate.Session;
+
 import java.util.*;
 
 public class QuizIO {
@@ -234,6 +236,54 @@ public class QuizIO {
 
     public static void main(String[] args) {
         QuizIO.main();
+    }
+
+    public static void takeQuiz(Quiz quiz) {
+        Question question;
+        Session session;
+        int score = 0;
+
+        for (int i = 0; i < quiz.getLength(); i++) {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            question = session.get(Question.class, currentID);
+            session.getTransaction().commit();
+
+            if (question.getType() == 1) {
+                score += mcq(question);
+            } else {
+                score += saq(question);
+            }
+        }
+    }
+
+    public static int mcq(Question question) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println(question.getQuestion());
+
+        List<String> answers = question.getAnswers();
+        Collections.shuffle(answers);
+
+        List<String> validChoices = Arrays.asList("1", "2", "3", "4");
+
+        System.out.println("1. " + answers.get(0) + "\n2. " + answers.get(1) + "\n3. " + answers.get(2) + "\n\4. " + answers.get(3));
+        String choice = scanner.nextLine();
+
+        while (!validChoices.contains(choice)) {
+            System.out.println("Invalid input.");
+            choice = scanner.nextLine();
+        }
+
+        int choiceInt = Integer.parseInt(choice) - 1;
+
+        if (Objects.equals(answers.get(choiceInt), question.getAnswer())) {
+            question.setCorrect(2);
+            return 1;
+        } else {
+            question.setCorrect(1);
+            return 0;
+        }
     }
 }
 
