@@ -33,6 +33,9 @@ public class QuizManager {
         Query titleQuery = session.createQuery("select q.title from Quiz q");
         this.quizTitles = titleQuery.list();
 
+        session.getTransaction().commit();
+        session.close();
+
     }
 
     public static void main(String[] args){
