@@ -140,4 +140,8 @@ public class Quiz {
         return this.id;
     }
 
+    public int getLength(){
+        return this.length;
+    }
+
 }
