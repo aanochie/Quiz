@@ -19,6 +19,11 @@ public class Quiz {
     @Column(name = "title")
     private String title;
 
+    @Column(name = "length")
+    private int length;
+    // Number of questions
+    // For number of questions in quiz return int
+
     @Column(name = "score")
     private int score; // Users previous score of set quiz
 
@@ -91,11 +96,11 @@ public class Quiz {
     // Quiz constructor to set generated questions
     // set this.qid_n = qid_n
     // Where qid_n comes from a list of generated questions id
-    public Quiz(int[] generatedQuestionId) {
+    public Quiz(int[] generatedQuestionId, String title) {
         Field[] fields = this.getClass().getDeclaredFields();
         // j is initialized as 2 so id and score are not counted in the loop
         // To check this println(fields[0]+\n fields[1]) should show Quiz.id and Quiz.score
-        for(int i=0, j=2; i < generatedQuestionId.length; i++, j++){
+        for(int i=0, j=3; i < generatedQuestionId.length; i++, j++){
             try{
                 fields[j].setAccessible(true);
                 fields[j].set(this, generatedQuestionId[i]);
@@ -104,6 +109,8 @@ public class Quiz {
             }
         }
         this.score = 0;
+        this.title = title;
+        this.length = generatedQuestionId.length;
     }
 
     /**

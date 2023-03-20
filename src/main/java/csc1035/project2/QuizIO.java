@@ -107,6 +107,31 @@ public class QuizIO {
         return incorrectQuestions;
     }
 
+    // Method to get title of quiz
+    public static String quizTitle(){
+        // Allows user to set quizTitle to anything they want
+        // Gives the user functionality to retrieve a specific quiz by title(maybe)
+        // quizTitle() returns list of quiz titles
+        Scanner sc = new Scanner(System.in);
+        QuizManager quizManager = new QuizManager();
+
+        // Stores all quiz titles in the Quizzes table
+        List<String> allTitles = quizManager.getQuizTitles();
+
+        String title = "";
+        boolean validTitle = false;
+        // Only update boolean if there is a title with matching string
+        // if there is a title with matching string then run loop.
+        while(!validTitle){
+            System.out.println("Enter quiz title: ");
+            title = sc.nextLine();
+            if(!allTitles.contains(title)){
+                validTitle = true;
+            }
+        }
+        return title;
+    }
+
     // Method to specify quizLength when incorrect questions are selected
     public static int incorrectQuizLength(int incorrectQuestions){
         int quizLength;
@@ -122,20 +147,22 @@ public class QuizIO {
     // Generates a quiz of random questions given the length of the quiz
     public static void randomQuiz(){
         int quizLength = quizLength();
+        String title = quizTitle();
         Listing listing = new Listing();
         int[] randGeneratedQuestionsIdArr = listing.randomQuestionsId(quizLength);
-        Quiz quiz = new Quiz(randGeneratedQuestionsIdArr);
+        Quiz quiz = new Quiz(randGeneratedQuestionsIdArr, title);
         quiz.save();
     }
 
     // Generates a quiz of random incorrect questions
     public static void incorrectQuestionsQuiz(){
         Listing listing = new Listing();
+        String title = quizTitle();
         int[] randomIncorrectQuestions = listing.randomQuestionsIdIncorrect();
         if(randomIncorrectQuestions.length == 0){
             System.out.println("There are no previously answered incorrect questions");
         } else {
-            Quiz quiz = new Quiz(randomIncorrectQuestions);
+            Quiz quiz = new Quiz(randomIncorrectQuestions, title);
             quiz.save();
         }
     }
@@ -148,11 +175,12 @@ public class QuizIO {
         String topic = topic();
         int incorrectQuestions = incorrect();
         int quizLength = incorrectQuizLength(incorrectQuestions);
+        String title = quizTitle();
 
         // Quiz generator
         Listing listing = new Listing();
         int[] generatedQuestionsId = listing.randomQuestionsId(topic, incorrectQuestions, quizLength);
-        Quiz quiz = new Quiz(generatedQuestionsId);
+        Quiz quiz = new Quiz(generatedQuestionsId, title);
         quiz.save();
 
     }
@@ -165,11 +193,12 @@ public class QuizIO {
         int type = type();
         int incorrectQuestions = incorrect();
         int quizLength = incorrectQuizLength(incorrectQuestions);
+        String title = quizTitle();
 
         // Quiz generator
         Listing listing = new Listing();
         int[] generatedQuestionsId = listing.randomQuestionsId(type, incorrectQuestions, quizLength);
-        Quiz quiz = new Quiz(generatedQuestionsId);
+        Quiz quiz = new Quiz(generatedQuestionsId, title);
         quiz.save();
 
     }
@@ -183,11 +212,12 @@ public class QuizIO {
         int type = type();
         int incorrectQuestions = incorrect();
         int quizLength = incorrectQuizLength(incorrectQuestions);
+        String title = quizTitle();
 
         // Quiz generator
         Listing listing = new Listing();
         int[] generatedQuestionsId = listing.randomQuestionsId(topic, type, incorrectQuestions, quizLength);
-        Quiz quiz = new Quiz(generatedQuestionsId);
+        Quiz quiz = new Quiz(generatedQuestionsId, title);
         quiz.save();
 
     }
