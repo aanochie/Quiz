@@ -2,6 +2,7 @@ package csc1035.project2;
 import org.hibernate.Session;
 import javax.persistence.*;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -97,6 +98,8 @@ public class Quiz {
     // set this.qid_n = qid_n
     // Where qid_n comes from a list of generated questions id
     public Quiz(int[] generatedQuestionId, String title) {
+
+
         Field[] fields = this.getClass().getDeclaredFields();
         // j is initialized as 2 so id and score are not counted in the loop
         // To check this println(fields[0]+\n fields[1]) should show Quiz.id and Quiz.score
@@ -132,6 +135,10 @@ public class Quiz {
         session.getTransaction().commit();
     }
 
+    public String getTitle() {
+        return title;
+    }
+
     public void setScore(Integer score){
         this.score =score;
     }
@@ -144,4 +151,83 @@ public class Quiz {
         return this.length;
     }
 
+    public int getQid_1() {
+        return qid_1;
+    }
+
+    public int getQid_2() {
+        return qid_2;
+    }
+
+    public int getQid_3() {
+        return qid_3;
+    }
+
+    public int getQid_4() {
+        return qid_4;
+    }
+
+    public int getQid_5() {
+        return qid_5;
+    }
+
+    public int getQid_6() {
+        return qid_6;
+    }
+
+    public int getQid_7() {
+        return qid_7;
+    }
+
+    public int getQid_8() {
+        return qid_8;
+    }
+
+    public int getQid_9() {
+        return qid_9;
+    }
+
+    public int getQid_10() {
+        return qid_10;
+    }
+
+    public int getQid_11() {
+        return qid_11;
+    }
+
+    public int getQid_12() {
+        return qid_12;
+    }
+
+    public int getQid_13() {
+        return qid_13;
+    }
+
+    public int getQid_14() {
+        return qid_14;
+    }
+
+    public int getQid_15() {
+        return qid_15;
+    }
+
+    public int getQid_16() {
+        return qid_16;
+    }
+
+    public int getQid_17() {
+        return qid_17;
+    }
+
+    public int getQid_18() {
+        return qid_18;
+    }
+
+    public int getQid_19() {
+        return qid_19;
+    }
+
+    public int getQid_20() {
+        return qid_20;
+    }
 }

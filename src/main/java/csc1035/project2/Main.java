@@ -12,7 +12,7 @@ public class Main {
         boolean running = true;
         while (running) {
             Scanner myScanner = new Scanner(System.in);
-            System.out.println("What would you like to do?\n1. Create/Update/Delete a question\n2. List questions\n3. Create/Delete a quiz\n4. Take a quiz\n5. Exit");
+            System.out.println("What would you like to do?\n1. Create/Update/Delete a question\n2. List questions\n3. Create a quiz\n4. Take a quiz\n5. Exit");
 
             String choice = myScanner.nextLine();
 
@@ -26,6 +26,8 @@ public class Main {
             switch (choice) {
                 case "1" -> QuestionIO.main();
                 case "2" -> QuestionIO.listingIO();
+                case "3" -> QuizIO.generateQuiz();
+                case "4" -> QuizIO.selectQuiz();
                 case "5" -> running = false;
             }
         }

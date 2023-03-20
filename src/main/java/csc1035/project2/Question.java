@@ -3,6 +3,7 @@ package csc1035.project2;
 import org.hibernate.Session;
 
 import javax.persistence.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -132,7 +133,12 @@ public class Question {
         session.getTransaction().commit();
     }
 
-    public List<String> getAnswers() {
-        return List.of(new String[]{answer, other1, other2, other3});
+    public ArrayList<String> getAnswers() {
+        ArrayList<String> answers = new ArrayList<>();
+        answers.add(answer);
+        answers.add(other1);
+        answers.add(other2);
+        answers.add(other3);
+        return answers;
     }
 }

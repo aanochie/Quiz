@@ -2,6 +2,9 @@ package csc1035.project2;
 
 import org.hibernate.Session;
 
+import org.hibernate.query.Query;
+
+import java.io.Serializable;
 import java.util.*;
 
 public class QuizIO {
@@ -225,7 +228,7 @@ public class QuizIO {
     }
 
     // Menu to give user option for which quiz to generate
-    public static void main(){
+    public static void generateQuiz(){
         Scanner sc = new Scanner(System.in);
         int quizType;
         while(true){
@@ -261,11 +264,32 @@ public class QuizIO {
             case 4 -> QuizIO.specifiedQuizType();
             case 5 -> QuizIO.specifiedQuizAll();
         }
-
     }
 
-    public static void main(String[] args) {
-        QuizIO.main();
+    public static void selectQuiz() {
+        QuizManager qm = new QuizManager();
+
+        List<String> titles = QuizManager.getQuizTitles();
+
+        for (String title: titles) {
+            System.out.println(title);
+        }
+        System.out.println("Which quiz would you like to take? Please enter its full title.");
+        Scanner scanner = new Scanner(System.in);
+        String chosenQuiz = scanner.nextLine();
+
+        if (!titles.contains(chosenQuiz)) {
+            return;
+        }
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        Query quizQuery = session.createQuery("select q.id from Quiz q where " + "q.title= :title");
+        quizQuery.setParameter("title", chosenQuiz);
+        Quiz quiz = session.get(Quiz.class, (Serializable) quizQuery.list().get(0));
+        session.getTransaction().commit();
+
+        takeQuiz(quiz);
     }
 
     public static void takeQuiz(Quiz quiz) {
@@ -273,10 +297,40 @@ public class QuizIO {
         Session session;
         int score = 0;
 
-        for (int i = 0; i < quiz.getLength(); i++) {
+        // Ugly code but it works so ¯\_(ツ)_/¯
+        ArrayList<Integer> questionIds = new ArrayList<>();
+        questionIds.add(quiz.getQid_1());
+        questionIds.add(quiz.getQid_2());
+        questionIds.add(quiz.getQid_3());
+        questionIds.add(quiz.getQid_4());
+        questionIds.add(quiz.getQid_5());
+        if (quiz.getLength() >= 5) {
+            questionIds.add(quiz.getQid_6());
+            questionIds.add(quiz.getQid_7());
+            questionIds.add(quiz.getQid_8());
+            questionIds.add(quiz.getQid_9());
+            questionIds.add(quiz.getQid_10());
+        }
+        if (quiz.getLength() >= 10) {
+            questionIds.add(quiz.getQid_11());
+            questionIds.add(quiz.getQid_12());
+            questionIds.add(quiz.getQid_13());
+            questionIds.add(quiz.getQid_14());
+            questionIds.add(quiz.getQid_15());
+        }
+        if (quiz.getLength() >= 15) {
+            questionIds.add(quiz.getQid_16());
+            questionIds.add(quiz.getQid_17());
+            questionIds.add(quiz.getQid_18());
+            questionIds.add(quiz.getQid_19());
+            questionIds.add(quiz.getQid_20());
+        }
+
+        System.out.println(questionIds);
+        for (Integer questionId : questionIds) {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            question = session.get(Question.class, currentID);
+            question = session.get(Question.class, questionId);
             session.getTransaction().commit();
 
             if (question.getType() == 1) {
@@ -285,6 +339,7 @@ public class QuizIO {
                 score += saq(question);
             }
         }
+        System.out.println("Score: " + score);
     }
 
     public static int mcq(Question question) {
@@ -292,12 +347,12 @@ public class QuizIO {
 
         System.out.println(question.getQuestion());
 
-        List<String> answers = question.getAnswers();
+        ArrayList<String> answers = question.getAnswers();
         Collections.shuffle(answers);
 
         List<String> validChoices = Arrays.asList("1", "2", "3", "4");
 
-        System.out.println("1. " + answers.get(0) + "\n2. " + answers.get(1) + "\n3. " + answers.get(2) + "\n\4. " + answers.get(3));
+        System.out.println("1. " + answers.get(0) + "\n2. " + answers.get(1) + "\n3. " + answers.get(2) + "\n4. " + answers.get(3));
         String choice = scanner.nextLine();
 
         while (!validChoices.contains(choice)) {
@@ -308,6 +363,24 @@ public class QuizIO {
         int choiceInt = Integer.parseInt(choice) - 1;
 
         if (Objects.equals(answers.get(choiceInt), question.getAnswer())) {
+            question.setCorrect(2);
+            return 1;
+        } else {
+            question.setCorrect(1);
+            return 0;
+        }
+    }
+
+    public static int saq(Question question) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println(question.getQuestion());
+
+        String answer = question.getAnswer();
+
+        String givenAnswer = scanner.nextLine().trim().toLowerCase();
+
+        if (answer.toLowerCase().equals(givenAnswer)) {
             question.setCorrect(2);
             return 1;
         } else {
