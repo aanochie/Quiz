@@ -326,8 +326,11 @@ public class QuizIO {
             questionIds.add(quiz.getQid_20());
         }
 
-        System.out.println(quiz.getLength());
+        int n = 1;
         for (Integer questionId : questionIds) {
+            System.out.println("\nQuestion " + n + ":");
+            n++;
+
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             question = session.get(Question.class, questionId);

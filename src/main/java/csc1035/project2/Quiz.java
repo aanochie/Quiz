@@ -98,8 +98,6 @@ public class Quiz {
     // set this.qid_n = qid_n
     // Where qid_n comes from a list of generated questions id
     public Quiz(int[] generatedQuestionId, String title) {
-
-
         Field[] fields = this.getClass().getDeclaredFields();
         // j is initialized as 2 so id and score are not counted in the loop
         // To check this println(fields[0]+\n fields[1]) should show Quiz.id and Quiz.score
