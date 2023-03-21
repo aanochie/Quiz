@@ -216,14 +216,4 @@ public class Listing {
         }
         return generatedQuestionsIdArr;
     }
-
-   public static void main(String[] args){
-        Listing listing = new Listing();
-        //listing.topicQuery("maths");
-        //listing.typeQuery(2);
-       //System.out.println(listing.generatedQuestions("maths", 1, 0, 3).size());
-       //System.out.println(listing.getAllQuestions().get(0).getId());
-       System.out.println(Arrays.toString(listing.randomQuestionsId("maths", 0, 10)));
-   }
-
 }

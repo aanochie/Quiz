@@ -37,9 +37,4 @@ public class QuizManager {
         session.close();
 
     }
-
-    public static void main(String[] args){
-        QuizManager quizManager = new QuizManager();
-        System.out.println(getQuizTitles());
-    }
 }
