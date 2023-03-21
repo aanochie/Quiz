@@ -1,11 +1,13 @@
 package csc1035.project2;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
 import org.hibernate.query.Query;
 
 import java.io.Serializable;
 import java.util.*;
+import java.util.stream.IntStream;
 
 public class QuizIO {
 
@@ -271,16 +273,23 @@ public class QuizIO {
 
         List<String> titles = QuizManager.getQuizTitles();
 
-        for (String title: titles) {
-            System.out.println(title);
+        System.out.println("Quizzes:");
+        for (int i = 1; i < titles.size() + 1; i++) {
+            String title = titles.get(i - 1);
+            System.out.println(i + ". " + title);
         }
-        System.out.println("Which quiz would you like to take? Please enter its full title.");
+        System.out.println("Which quiz would you like to take? Please enter its number.");
         Scanner scanner = new Scanner(System.in);
-        String chosenQuiz = scanner.nextLine();
 
-        if (!titles.contains(chosenQuiz)) {
-            return;
+        List<String> validChoices = Arrays.stream(IntStream.range(1, titles.size() + 1).mapToObj(String::valueOf).toArray(String[]::new)).toList();
+        String titleNumber = scanner.nextLine();
+
+        while (!validChoices.contains(titleNumber)) {
+            System.out.println("Invalid choice. Please enter a number from 1-" + titles.size() + ":");
+            titleNumber = scanner.nextLine();
         }
+
+        String chosenQuiz = titles.get(Integer.parseInt(titleNumber) - 1);
 
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
@@ -341,8 +350,13 @@ public class QuizIO {
             } else {
                 score += saq(question);
             }
+            session.beginTransaction();
+            question.update();
+            session.getTransaction().commit();
         }
-        System.out.println("Score: " + score);
+        System.out.println("Score: " + score + "/" + quiz.getLength());
+
+        logResults(quiz, score);
     }
 
     public static int mcq(Question question) {
@@ -391,5 +405,23 @@ public class QuizIO {
             return 0;
         }
     }
-}
 
+    public static void logResults(Quiz quiz, int score) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+
+            //sets the score of the quiz to what the user got
+            quiz.setScore(score);
+            session.update(quiz);       //updates the quiz score of the quiz
+            session.getTransaction().commit();
+
+        } catch (HibernateException e) {
+            if (session != null) session.getTransaction().rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+}
