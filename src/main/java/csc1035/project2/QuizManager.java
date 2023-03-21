@@ -8,17 +8,17 @@ import java.util.List;
 public class QuizManager {
 
     // List of all quizzes in the database
-    private static List allQuizzes = null;
+    private static List<Quiz> allQuizzes;
     // List of all quiz titles in table
-    private static List quizTitles = null;
+    private static List<String> quizTitles;
 
     // Getters and Setters
 
-    public static List getAllQuizzes(){
+    public static List<Quiz> getAllQuizzes(){
         return allQuizzes;
     }
 
-    public static List getQuizTitles(){
+    public static List<String> getQuizTitles(){
         return quizTitles;
     }
 

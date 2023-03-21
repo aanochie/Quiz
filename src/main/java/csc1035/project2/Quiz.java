@@ -113,7 +113,7 @@ public class Quiz {
         }
         this.score = 0;
         this.title = title;
-        this.length = generatedQuestionId.length;
+        this.length = generatedQuestionId.length - 1;
     }
 
     /**

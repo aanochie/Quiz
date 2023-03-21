@@ -77,7 +77,7 @@ public class Listing {
 
         // Adds distinct random integers to randomIndex list and set given length.
         // Limit determines how many random numbers to generate
-        while (randomIndexesSet.size() < length) {
+        while (randomIndexesSet.size() < length + 1) {
             // Creates random number from 0 to amount of questions in Question table
             int rand = (int) (Math.random() * questionList.size());
             if (!randomIndexesSet.contains(rand)) {
@@ -86,7 +86,7 @@ public class Listing {
             }
         }
         // Gets the question id from Questions using randomIndexList as the index
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < length + 1; i++) {
             Integer questionId = questionList.get(randomIndexList.get(i)).getId();
             ranQuestionsIdList.add(questionId);
         }
@@ -141,7 +141,7 @@ public class Listing {
         Query query;
 
         if(correct == 0) {
-             query = session.createQuery("from Question where type = :type " +
+            query = session.createQuery("from Question where type = :type " +
                     "and correct = :correct ").setMaxResults(length);
         } else {
             query = session.createQuery("from Question where type = :type " +

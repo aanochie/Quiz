@@ -304,21 +304,21 @@ public class QuizIO {
         questionIds.add(quiz.getQid_3());
         questionIds.add(quiz.getQid_4());
         questionIds.add(quiz.getQid_5());
-        if (quiz.getLength() >= 5) {
+        if (quiz.getLength() > 5) {
             questionIds.add(quiz.getQid_6());
             questionIds.add(quiz.getQid_7());
             questionIds.add(quiz.getQid_8());
             questionIds.add(quiz.getQid_9());
             questionIds.add(quiz.getQid_10());
         }
-        if (quiz.getLength() >= 10) {
+        if (quiz.getLength() > 10) {
             questionIds.add(quiz.getQid_11());
             questionIds.add(quiz.getQid_12());
             questionIds.add(quiz.getQid_13());
             questionIds.add(quiz.getQid_14());
             questionIds.add(quiz.getQid_15());
         }
-        if (quiz.getLength() >= 15) {
+        if (quiz.getLength() > 15) {
             questionIds.add(quiz.getQid_16());
             questionIds.add(quiz.getQid_17());
             questionIds.add(quiz.getQid_18());
@@ -326,7 +326,7 @@ public class QuizIO {
             questionIds.add(quiz.getQid_20());
         }
 
-        System.out.println(questionIds);
+        System.out.println(quiz.getLength());
         for (Integer questionId : questionIds) {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
