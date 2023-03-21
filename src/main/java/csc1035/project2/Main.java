@@ -26,8 +26,8 @@ public class Main {
             switch (choice) {
                 case "1" -> QuestionIO.main();
                 case "2" -> QuestionIO.listingIO();
-                case "3" -> QuizIO.generateQuiz();
-                case "4" -> QuizIO.selectQuiz();
+                case "3" -> GenerateQuiz.generateQuiz();
+                case "4" -> TakeQuiz.selectQuiz();
                 case "5" -> running = false;
             }
         }
