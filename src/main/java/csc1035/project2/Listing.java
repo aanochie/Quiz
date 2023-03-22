@@ -4,6 +4,7 @@ import org.hibernate.query.Query;
 
 import java.util.*;
 
+
 public class Listing {
     private List<Question> allQuestions = new ArrayList<>();
     public Listing(){
@@ -21,11 +22,20 @@ public class Listing {
         // Add the Question object to the List object
     }
 
+    /**
+     *
+     * @return returns a list of all Question objects in the Questions table
+     */
     public List<Question> getAllQuestions() {
         return allQuestions;
         // Returns a List object that stores all Question objects
     }
 
+
+    /**
+     *
+     * @return returns a list of Question objects which were previously answered incorrectly
+     */
     public List<Question> getIncorrectQuestions() {
         List<Question> incorrectQuestions = new ArrayList<>();
         for (Question question : allQuestions) {
@@ -36,6 +46,11 @@ public class Listing {
         return incorrectQuestions;
     }
 
+    /**
+     *
+     * @param type defines the type of question to return
+     * @return returns a list of Question objects with specified type
+     */
     public List<Question> getQuestionsByType(int type) {
         List<Question> questionsByType = new ArrayList<>();
         // Create a new List object to store the specified type of Question object
@@ -50,6 +65,11 @@ public class Listing {
         // Returns a List object that stores the Question object of the specified type
     }
 
+    /**
+     *
+     * @param topic defines the topic of the questions to return
+     * @return returns a list of Question objects with specified type
+     */
     public List<Question> getQuestionsByTopic(String topic) {
         List<Question> questionsByTopic = new ArrayList<>();
         // Create a new List object to store the Question object for the specified topic
@@ -65,7 +85,12 @@ public class Listing {
     }
 
 
-    // Returns List of random question id given length of list and a list of Questions to randomise
+    /**
+     *
+     * @param length defines the list and set sizes.
+     * @param questionList defines the list of Question objects to randomise order.
+     * @return returns a list of distinct question ids with random order.
+     */
     public static List<Integer> randomIndexList(int length, List<Question> questionList){
         // length refers to Quiz length
         // List to get index of random integers in the set
@@ -93,7 +118,12 @@ public class Listing {
         return ranQuestionsIdList;
     }
 
-    // Returns an array of questionsId given a list of Question
+    /**
+     *
+     * @param questions defines list of Question objects to be used in the randomIndexList()
+     * @return returns array of integers made of distinct and random
+     * question ids
+     */
     public static int[] questionsToIdArray(List<Question> questions) {
         int length = questions.size();
         List<Integer> randomIndexList = randomIndexList(length, questions);

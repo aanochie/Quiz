@@ -93,10 +93,6 @@ public class Quiz {
      * This constructor makes up for a 5-question quiz and assigns each question to its specific id
      * @param generatedQuestionId
      */
-    // 5 Question constructor
-    // Quiz constructor to set generated questions
-    // set this.qid_n = qid_n
-    // Where qid_n comes from a list of generated questions id
     public Quiz(int[] generatedQuestionId, String title) {
         Field[] fields = this.getClass().getDeclaredFields();
         // j is initialized as 4 so id, title, score and length are not counted in the loop
@@ -112,7 +108,6 @@ public class Quiz {
         this.score = 0;
         this.title = title;
         this.length = generatedQuestionId.length;
-        //System.out.println(length);
         save();
     }
 

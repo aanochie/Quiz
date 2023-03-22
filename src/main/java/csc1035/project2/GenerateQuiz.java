@@ -7,7 +7,6 @@ public class GenerateQuiz {
     // Method to get topic from input
     public static String topic(){
         Scanner sc = new Scanner(System.in);
-        // Topic option
         int topicChoice;
         String topic = "";
         while (true) {
@@ -19,6 +18,7 @@ public class GenerateQuiz {
                     4. Maths
                     Enter topic number:""");
             String topicInput = sc.nextLine();
+            // Try block check if integer is inputted
             try {
                 topicChoice = Integer.parseInt(topicInput);
             } catch (NumberFormatException e) {
@@ -32,7 +32,7 @@ public class GenerateQuiz {
             break;
         }
         switch (topicChoice) {
-            case 1 -> topic = "programming"; //Can be changed to fit table requirements
+            case 1 -> topic = "programming";
             case 2 -> topic = "databases";
             case 3 -> topic = "architecture";
             case 4 -> topic = "maths";
@@ -51,7 +51,7 @@ public class GenerateQuiz {
                     2. Short Answer
                     Enter type number:""");
             String typeInput = sc.nextLine();
-            // Try block checks if integer is entered
+            // Try block checks if integer is inputted
             try {
                 type = Integer.parseInt(typeInput);
             } catch (NumberFormatException e) {
@@ -95,7 +95,6 @@ public class GenerateQuiz {
     // Method to specify incorrect questions option
     public static int incorrect(){
         Scanner sc = new Scanner(System.in);
-        // Incorrect questions option
         System.out.println("Would you like to make the quiz with questions previously answered incorrectly?");
         System.out.println("Enter y/yes or any other key for No");
         String incorrectQuestionsChoice = sc.nextLine();
@@ -110,18 +109,13 @@ public class GenerateQuiz {
     // Method to get title of quiz
     public static String quizTitle(){
         // Allows user to set quizTitle to anything they want
-        // Gives the user functionality to retrieve a specific quiz by title(maybe)
-        // quizTitle() returns list of quiz titles
         Scanner sc = new Scanner(System.in);
         QuizManager quizManager = new QuizManager();
 
-        // Stores all quiz titles in the Quizzes table
         List<String> allTitles = quizManager.getQuizTitles();
 
         String title = "";
         boolean validTitle = false;
-        // Only update boolean if there is a title with matching string
-        // if there is a title with matching string then run loop.
         while(!validTitle){
             System.out.println("Enter quiz title: ");
             title = sc.nextLine();

@@ -7,12 +7,10 @@ import java.util.List;
 
 public class QuizManager {
 
-    // List of all quizzes in the database
+    // List of all quizzes in the table
     private static List<Quiz> allQuizzes;
     // List of all quiz titles in table
     private static List<String> quizTitles;
-
-    // Getters and Setters
 
     public static List<Quiz> getAllQuizzes(){
         return allQuizzes;
