@@ -62,7 +62,6 @@ public class Listing {
             }
         }
         return questionsByType;
-        // Returns a List object that stores the Question object of the specified type
     }
 
     /**
@@ -92,7 +91,6 @@ public class Listing {
      * @return returns a list of distinct question ids with random order.
      */
     public static List<Integer> randomIndexList(int length, List<Question> questionList){
-        // length refers to Quiz length
         // List to get index of random integers in the set
         List<Integer> randomIndexList = new ArrayList<>();
         // Set to store distinct random integers
@@ -101,9 +99,9 @@ public class Listing {
         List<Integer> ranQuestionsIdList = new ArrayList<>();
 
         // Adds distinct random integers to randomIndex list and set given length.
-        // Limit determines how many random numbers to generate
+        // length determines how many random numbers to generate
         while (randomIndexesSet.size() < length ) {
-            // Creates random number from 0 to amount of questions in Question table
+            // Creates random number from 0 to amount of questions in the provided list of Questions
             int rand = (int) (Math.random() * questionList.size());
             if (!randomIndexesSet.contains(rand)) {
                 randomIndexesSet.add(rand);
@@ -120,9 +118,8 @@ public class Listing {
 
     /**
      *
-     * @param questions defines list of Question objects to be used in the randomIndexList()
-     * @return returns array of integers made of distinct and random
-     * question ids
+     * @param questions defines list of Question objects to be used in the randomIndexList().
+     * @return returns array of primitive type integers made of distinct and random question ids.
      */
     public static int[] questionsToIdArray(List<Question> questions) {
         int length = questions.size();
@@ -130,11 +127,19 @@ public class Listing {
         return randomIndexList.stream().mapToInt(i -> i).toArray();
     }
 
-    // Returns an array of questionsId taking in account if there are enough questions
-    // by type or topic
+    /**
+     *
+     * @param length defines the quizLength selected by the user to be compared to the queried list length.
+     * @param session defines the initiated hibernate Session
+     * @param query defines the hibernate Query which length is going to be set depending on the quiz length.
+     * @return returns an array of primitive type integers made of distinct and random question ids.
+     */
     private int[] queryLength(int length, Session session, Query<Question> query) {
         List<Question> generatedQuestionsList;
         int[] generatedQuestionsIdArray;
+
+        // Ensures if the quiz length selected exceeds the amount of questions available, sets the length of the
+        // query to the amount of questions with the specified type and topic available
         if(query.list().size() >= length){
             generatedQuestionsList = query.setMaxResults(length).stream().toList();
         } else {
@@ -152,15 +157,21 @@ public class Listing {
     }
 
 
-    // Returns an array of questions id given topic and whether to use incorrect questions
-    // Takes in account whether there are enough questions of the same topic
-    // If there are not enough questions, return how many questions there are
+    /**
+     *
+     * @param topic defines the question topic to be queried.
+     * @param correct defines whether the user wants previously answered incorrect questions to be queried.
+     * @param length defines the length of the list of questions queried.
+     * @return returns an array of primitive type integers made of distinct and random question ids, specified by the
+     * topic and whether to return previously answered incorrect questions.
+     */
     public int[] randomQuestionsId(String topic, int correct, int length){
         int[] generatedQuestionsIdArray;
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
-        // Only gets incorrect or correct questions if they are required
+        // Ensures that incorrect questions are only queried when required
+        // Allows user to query questions even if they have been previously answered
         Query<Question> query;
         if(correct == 1 | correct == 2) {
              query = session.createQuery("from Question where " +
@@ -177,10 +188,15 @@ public class Listing {
     }
 
 
-    // Returns an array of questions id given type and whether to use incorrect questions
-    // Takes in account whether there are enough questions of the same topic
-    // If there are not enough questions, return how many questions there are
-    // This can be handled in QuizIO
+
+    /**
+     *
+     * @param type defines the question type to be queried.
+     * @param correct defines whether the user wants previously answered incorrect questions to be queried.
+     * @param length defines the length of the list of questions queried.
+     * @return returns an array of primitive type integers made of distinct and random question ids, specified by the type
+     * and whether to return previously answered incorrect questions.
+     */
     public int[] randomQuestionsId(int type, int correct, int length){
         int[] generatedQuestionsIdArray;
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -197,19 +213,29 @@ public class Listing {
         query.setParameter("type", type);
 
 
-        // Sets the size of the query to match the length of the quiz if
-        // there are more questions queried than required
+        // Sets the size of the query to match the length of the quiz if there are more questions queried than required
+        // if there are not enough questions queried then it sets the length to how many questions queried there are.
         generatedQuestionsIdArray = queryLength(length, session, query);
         return generatedQuestionsIdArray;
     }
 
-    // Returns array of random questions ids if incorrect questions are specified
+
+    /**
+     *
+     * @return returns array of random questions ids where all the questions have been previously answered incorrectly.
+     */
     public int[] randomQuestionsIdIncorrect(){
         List<Question> generatedQuestionsList = getIncorrectQuestions();
         return questionsToIdArray(generatedQuestionsList);
     }
 
-    // Generates random distinct questions id given quiz length
+
+    /**
+     *
+     * @param length defines the length of the array returned
+     * @return returns a random array of primitive type integers with specified length, made of question ids
+     * from all questions available.
+     */
     public int[] randomQuestionsId(int length) {
         // Set to store distinct questions
         List<Integer> ranQuestionsIdList = new ArrayList<>(randomIndexList(length, allQuestions));
@@ -220,9 +246,16 @@ public class Listing {
         return ranQuestionsIdArr;
     }
 
-    // Returns Array of random questions id given topic, type, length, and
-    // if to use incorrect questions
-    // Need to check for amount of questions if incorrect and match for list
+
+    /**
+     *
+     * @param topic defines the question topic to be queried
+     * @param type defines the question type to be queried
+     * @param correct defines whether user wants previously answered incorrect questions to be queried
+     * @param length defines the length of the list of questions queried
+     * @return returns an array of primitive type integers made of distinct and random question ids, with specified
+     * topic, type and whether the user wants previously answered incorrect questions.
+     */
     public int[] randomQuestionsId(String topic, int type, int correct, int length){
         int[] generatedQuestionsIdArr;
 
