@@ -127,6 +127,8 @@ public class GenerateQuiz {
             title = sc.nextLine();
             if(!allTitles.contains(title)){
                 validTitle = true;
+            } else {
+                System.out.println("Quiz title already in use. Use different title.");
             }
         }
         return title;
@@ -134,14 +136,14 @@ public class GenerateQuiz {
 
     // Method to specify quizLength when incorrect questions are selected
     public static int incorrectQuizLength(int incorrectQuestions){
-        int quizLength;
+        int incorrectQuizLength;
         if(incorrectQuestions == 0){
-            quizLength = quizLength();
+            incorrectQuizLength = quizLength();
         } else {
             // Set to 1 since it can not be null and quizLength is going to be ignored by Listing.randomQuestionsId()
-            quizLength = 1;
+            incorrectQuizLength = 1;
         }
-        return quizLength;
+        return incorrectQuizLength;
     }
 
     // Generates a quiz of random questions given the length of the quiz
@@ -151,7 +153,6 @@ public class GenerateQuiz {
         Listing listing = new Listing();
         int[] randGeneratedQuestionsIdArr = listing.randomQuestionsId(quizLength);
         Quiz quiz = new Quiz(randGeneratedQuestionsIdArr, title);
-        quiz.save();
     }
 
     // Generates a quiz of random incorrect questions
@@ -163,7 +164,6 @@ public class GenerateQuiz {
             System.out.println("There are no previously answered incorrect questions");
         } else {
             Quiz quiz = new Quiz(randomIncorrectQuestions, title);
-            quiz.save();
         }
     }
 
@@ -175,13 +175,15 @@ public class GenerateQuiz {
         String topic = topic();
         int incorrectQuestions = incorrect();
         int quizLength = incorrectQuizLength(incorrectQuestions);
+        // Quiz length depends on how many questions of same topic that are in the database
+        // Should be enough questions for topic
         String title = quizTitle();
 
         // Quiz generator
         Listing listing = new Listing();
         int[] generatedQuestionsId = listing.randomQuestionsId(topic, incorrectQuestions, quizLength);
         Quiz quiz = new Quiz(generatedQuestionsId, title);
-        quiz.save();
+
 
     }
 
@@ -199,7 +201,7 @@ public class GenerateQuiz {
         Listing listing = new Listing();
         int[] generatedQuestionsId = listing.randomQuestionsId(type, incorrectQuestions, quizLength);
         Quiz quiz = new Quiz(generatedQuestionsId, title);
-        quiz.save();
+
 
     }
 
@@ -212,13 +214,17 @@ public class GenerateQuiz {
         int type = type();
         int incorrectQuestions = incorrect();
         int quizLength = incorrectQuizLength(incorrectQuestions);
+        // Quiz length depends on how many questions of the same type and topic we have
+        // Make a quizLength for incorrectQuestions and quizLength for type
+        // if getQuestionsByType.length is less than length provided then return
+        // the length of questionByType and topic
         String title = quizTitle();
 
         // Quiz generator
         Listing listing = new Listing();
         int[] generatedQuestionsId = listing.randomQuestionsId(topic, type, incorrectQuestions, quizLength);
         Quiz quiz = new Quiz(generatedQuestionsId, title);
-        quiz.save();
+
 
     }
 
@@ -252,11 +258,11 @@ public class GenerateQuiz {
             break;
         }
         switch (quizType){
-            case 1 -> GenerateQuiz.randomQuiz();
-            case 2 -> GenerateQuiz.incorrectQuestionsQuiz();
-            case 3 -> GenerateQuiz.specifiedQuizTopic();
-            case 4 -> GenerateQuiz.specifiedQuizType();
-            case 5 -> GenerateQuiz.specifiedQuizAll();
+            case 1 -> randomQuiz();
+            case 2 -> incorrectQuestionsQuiz();
+            case 3 -> specifiedQuizTopic();
+            case 4 -> specifiedQuizType();
+            case 5 -> specifiedQuizAll();
         }
     }
 }

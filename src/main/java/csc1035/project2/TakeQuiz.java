@@ -12,7 +12,7 @@ public class TakeQuiz {
     public static void selectQuiz() {
         QuizManager qm = new QuizManager();
 
-        List<String> titles = QuizManager.getQuizTitles();
+        List<String> titles = qm.getQuizTitles();
 
         System.out.println("Quizzes:");
         for (int i = 1; i < titles.size() + 1; i++) {

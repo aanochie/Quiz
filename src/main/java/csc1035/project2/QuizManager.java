@@ -18,7 +18,7 @@ public class QuizManager {
         return allQuizzes;
     }
 
-    public static List<String> getQuizTitles(){
+    public List<String> getQuizTitles(){
         return quizTitles;
     }
 

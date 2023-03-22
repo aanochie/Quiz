@@ -77,7 +77,7 @@ public class Listing {
 
         // Adds distinct random integers to randomIndex list and set given length.
         // Limit determines how many random numbers to generate
-        while (randomIndexesSet.size() < length + 1) {
+        while (randomIndexesSet.size() < length ) {
             // Creates random number from 0 to amount of questions in Question table
             int rand = (int) (Math.random() * questionList.size());
             if (!randomIndexesSet.contains(rand)) {
@@ -86,7 +86,7 @@ public class Listing {
             }
         }
         // Gets the question id from Questions using randomIndexList as the index
-        for (int i = 0; i < length + 1; i++) {
+        for (int i = 0; i < length; i++) {
             Integer questionId = questionList.get(randomIndexList.get(i)).getId();
             ranQuestionsIdList.add(questionId);
         }
@@ -100,27 +100,19 @@ public class Listing {
         return randomIndexList.stream().mapToInt(i -> i).toArray();
     }
 
-
-    // Returns an array of questions id given topic and whether to use incorrect questions
-    // Takes in account whether there are enough questions of the same topic
-    // If there are not enough questions, return how many questions there are
-    public int[] randomQuestionsId(String topic, int correct, int length){
+    // Returns an array of questionsId taking in account if there are enough questions
+    // by type or topic
+    private int[] queryLength(int length, Session session, Query<Question> query) {
         List<Question> generatedQuestionsList;
         int[] generatedQuestionsIdArray;
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        Query query;
-
-        if(correct == 0) {
-            query = session.createQuery("from Question where " +
-                    "topic= :topic and correct= :correct").setMaxResults(length);
+        if(query.list().size() > length){
+            generatedQuestionsList = query.setMaxResults(length).stream().toList();
         } else {
-            query = session.createQuery("from Question where " +
-                    "topic= :topic and correct= :correct");
+            System.out.println("There are not enough questions by the parameters selected.\nQuiz length set to: "
+            + query.list().size());
+            generatedQuestionsList = query.stream().toList();
         }
-        query.setParameter("topic", topic);
-        query.setParameter("correct", correct);
-        generatedQuestionsList = query.list();
+
         session.getTransaction().commit();
         session.close();
 
@@ -129,34 +121,43 @@ public class Listing {
         return generatedQuestionsIdArray;
     }
 
+
+    // Returns an array of questions id given topic and whether to use incorrect questions
+    // Takes in account whether there are enough questions of the same topic
+    // If there are not enough questions, return how many questions there are
+    public int[] randomQuestionsId(String topic, int correct, int length){
+        int[] generatedQuestionsIdArray;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+
+        Query<Question> query = session.createQuery("from Question where " +
+                    "topic= :topic and correct= :correct");
+        query.setParameter("topic", topic);
+        query.setParameter("correct", correct);
+
+        generatedQuestionsIdArray = queryLength(length, session, query);
+        return generatedQuestionsIdArray;
+    }
+
+
     // Returns an array of questions id given type and whether to use incorrect questions
     // Takes in account whether there are enough questions of the same topic
     // If there are not enough questions, return how many questions there are
     // This can be handled in QuizIO
     public int[] randomQuestionsId(int type, int correct, int length){
-        List<Question> generatedQuestionsList;
         int[] generatedQuestionsIdArray;
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        Query query;
 
-        if(correct == 0) {
-            query = session.createQuery("from Question where type = :type " +
-                    "and correct = :correct ").setMaxResults(length);
-        } else {
-            query = session.createQuery("from Question where type = :type " +
-                    "and correct = :correct ");
-        }
+        Query<Question> query = session.createQuery("from Question where type = :type " +
+                "and correct = :correct ");
 
         query.setParameter("type", type);
         query.setParameter("correct", correct);
-        generatedQuestionsList = query.list();
-        session.getTransaction().commit();
-        session.close();
 
-
-        generatedQuestionsIdArray = questionsToIdArray(generatedQuestionsList);
-
+        // Sets the size of the query to match the length of the quiz if
+        // there are more questions queried than required
+        generatedQuestionsIdArray = queryLength(length, session, query);
         return generatedQuestionsIdArray;
     }
 
@@ -181,39 +182,24 @@ public class Listing {
     // if to use incorrect questions
     // Need to check for amount of questions if incorrect and match for list
     public int[] randomQuestionsId(String topic, int type, int correct, int length){
-        List<Question> generatedQuestionsList = new ArrayList<>();
         int[] generatedQuestionsIdArr;
 
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        Query query;
-
-        // Changes the size of the queried list depending on incorrect question selection
-        if(correct==0) {
-            query = session.createQuery("from Question where type= :type " +
-                    "and topic= :topic and correct= :correct").setMaxResults(length);
-        } else {
-            query = session.createQuery("from Question where type= :type " +
-            "and topic= :topic and correct= :correct");
-        }
+        Query<Question> query = session.createQuery("from Question where type= :type " +
+                    "and topic= :topic and correct= :correct");
 
         query.setParameter("type", type);
         query.setParameter("topic", topic);
         query.setParameter("correct", correct);
-        // Stores query result to list of Questions
-        generatedQuestionsList = query.list();
-        session.getTransaction().commit();
-        session.close();
 
-        // Changes the length of the questionId array depending on incorrect questions selection
-        if(correct == 0) {
-            generatedQuestionsIdArr =
-                    randomIndexList(length, generatedQuestionsList).stream().mapToInt(i -> i).toArray();
-        } else {
-            int incorrectQuestionsSize = generatedQuestionsList.size();
-            generatedQuestionsIdArr =
-                    randomIndexList(incorrectQuestionsSize, generatedQuestionsList).stream().mapToInt(i -> i).toArray();
-        }
+        generatedQuestionsIdArr = queryLength(length, session, query);
         return generatedQuestionsIdArr;
+    }
+
+    public static void main(String[] args){
+        Listing listing = new Listing();
+        int[] questions = listing.randomQuestionsId("maths", 2, 0, 20);
+        System.out.println(questions.length);
     }
 }
