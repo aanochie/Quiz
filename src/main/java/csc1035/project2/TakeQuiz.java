@@ -9,6 +9,9 @@ import java.util.*;
 import java.util.stream.IntStream;
 
 public class TakeQuiz {
+    /**
+     * allows the user to select a quiz to take
+     */
     public static void selectQuiz() {
         QuizManager qm = new QuizManager();
 
@@ -42,6 +45,10 @@ public class TakeQuiz {
         takeQuiz(quiz);
     }
 
+    /**
+     * creates an ArrayList of the quiz's questions and then iterates through them, incrementing the score variable if the user gets a question right
+     * @param quiz the quiz being taken
+     */
     public static void takeQuiz(Quiz quiz) {
         Question question;
         Session session;
@@ -100,6 +107,11 @@ public class TakeQuiz {
         logResults(quiz, score);
     }
 
+    /**
+     * allows the user to take a multiple choice question by displaying the question and the 4 options, then asking for input
+     * @param question the question being taken
+     * @return 1 if the user got the question correct, 0 if not
+     */
     public static int mcq(Question question) {
         Scanner scanner = new Scanner(System.in);
 
@@ -129,6 +141,11 @@ public class TakeQuiz {
         }
     }
 
+    /**
+     * allows the user to take a short answer question by displaying the question, then asking for input
+     * @param question the question being taken
+     * @return 1 if the user got the question correct, 0 if not
+     */
     public static int saq(Question question) {
         Scanner scanner = new Scanner(System.in);
 
@@ -147,6 +164,11 @@ public class TakeQuiz {
         }
     }
 
+    /**
+     * logs the user's score
+     * @param quiz the quiz being taken
+     * @param score the user's score
+     */
     public static void logResults(Quiz quiz, int score) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {

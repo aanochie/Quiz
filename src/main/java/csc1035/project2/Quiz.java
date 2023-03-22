@@ -123,11 +123,6 @@ public class Quiz {
 
     }
 
-    public static void newRow() {
-        Quiz addRow = new Quiz();
-        addRow.save();
-    }
-
     public void save() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
@@ -136,16 +131,8 @@ public class Quiz {
         session.close();
     }
 
-    public String getTitle() {
-        return title;
-    }
-
     public void setScore(Integer score){
         this.score =score;
-    }
-
-    public int getID(){
-        return this.id;
     }
 
     public int getLength(){

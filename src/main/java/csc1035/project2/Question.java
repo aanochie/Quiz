@@ -73,6 +73,13 @@ public class Question {
         this.correct = val;
     }
 
+    /**
+     * Constructor for short answer questions
+     * @param question
+     * @param topic
+     * @param type
+     * @param answer
+     */
     // constructor for saq
     public Question(String question, String topic, int type, String answer) {
         this.question = question;
@@ -85,6 +92,14 @@ public class Question {
         this.correct = 0;
     }
 
+    /**
+     * Constructor for multiple choice questions
+     * @param question
+     * @param topic
+     * @param type
+     * @param answer
+     * @param otherAnswers
+     */
     // constructor for mcq
     public Question(String question, String topic, int type, String answer, ArrayList<String> otherAnswers) {
         this.question = question;
@@ -101,6 +116,9 @@ public class Question {
 
     }
 
+    /**
+     * @return a human-readable string describing the object
+     */
     @Override
     public String toString() {
         if (type == 1) {
@@ -119,6 +137,9 @@ public class Question {
         }
     }
 
+    /**
+     * saves the question object to the table
+     */
     public void save() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
@@ -126,6 +147,9 @@ public class Question {
         session.getTransaction().commit();
     }
 
+    /**
+     * updates a question object in the table
+     */
     public void update() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
@@ -133,6 +157,9 @@ public class Question {
         session.getTransaction().commit();
     }
 
+    /**
+     * @return an ArrayList of all options for a multiple choice question
+     */
     public ArrayList<String> getAnswers() {
         ArrayList<String> answers = new ArrayList<>();
         answers.add(answer);
