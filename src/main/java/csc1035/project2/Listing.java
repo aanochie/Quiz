@@ -105,7 +105,7 @@ public class Listing {
     private int[] queryLength(int length, Session session, Query<Question> query) {
         List<Question> generatedQuestionsList;
         int[] generatedQuestionsIdArray;
-        if(query.list().size() > length){
+        if(query.list().size() >= length){
             generatedQuestionsList = query.setMaxResults(length).stream().toList();
         } else {
             System.out.println("There are not enough questions by the parameters selected.\nQuiz length set to: "
@@ -130,10 +130,17 @@ public class Listing {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
-        Query<Question> query = session.createQuery("from Question where " +
+        // Only gets incorrect or correct questions if they are required
+        Query<Question> query;
+        if(correct == 1 | correct == 2) {
+             query = session.createQuery("from Question where " +
                     "topic= :topic and correct= :correct");
+            query.setParameter("correct", correct);
+        } else {
+            query = session.createQuery("from Question where topic= :topic");
+        }
         query.setParameter("topic", topic);
-        query.setParameter("correct", correct);
+
 
         generatedQuestionsIdArray = queryLength(length, session, query);
         return generatedQuestionsIdArray;
@@ -149,11 +156,16 @@ public class Listing {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
-        Query<Question> query = session.createQuery("from Question where type = :type " +
-                "and correct = :correct ");
-
+        Query<Question> query;
+        if(correct == 1 | correct == 2) {
+            query = session.createQuery("from Question where type = :type " +
+                    "and correct = :correct ");
+            query.setParameter("correct", correct);
+        } else {
+            query = session.createQuery("from Question where type = :type");
+        }
         query.setParameter("type", type);
-        query.setParameter("correct", correct);
+
 
         // Sets the size of the query to match the length of the quiz if
         // there are more questions queried than required
@@ -186,12 +198,17 @@ public class Listing {
 
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        Query<Question> query = session.createQuery("from Question where type= :type " +
-                    "and topic= :topic and correct= :correct");
 
+        Query<Question> query;
+        if(correct == 1 | correct ==2) {
+            query = session.createQuery("from Question where type= :type " +
+                    "and topic= :topic and correct= :correct");
+            query.setParameter("correct", correct);
+        } else {
+            query = session.createQuery("from Question where type= :type and topic= :topic");
+        }
         query.setParameter("type", type);
         query.setParameter("topic", topic);
-        query.setParameter("correct", correct);
 
         generatedQuestionsIdArr = queryLength(length, session, query);
         return generatedQuestionsIdArr;
