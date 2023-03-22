@@ -196,10 +196,4 @@ public class Listing {
         generatedQuestionsIdArr = queryLength(length, session, query);
         return generatedQuestionsIdArr;
     }
-
-    public static void main(String[] args){
-        Listing listing = new Listing();
-        int[] questions = listing.randomQuestionsId("maths", 2, 0, 20);
-        System.out.println(questions.length);
-    }
 }
