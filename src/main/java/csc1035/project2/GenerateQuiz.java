@@ -4,7 +4,10 @@ import java.util.*;
 
 public class GenerateQuiz {
 
-    // Method to get topic from input
+    /**
+     *
+     * @return returns string containing user selected topic for quiz generation
+     */
     public static String topic(){
         Scanner sc = new Scanner(System.in);
         int topicChoice;
@@ -40,7 +43,10 @@ public class GenerateQuiz {
         return topic;
     }
 
-    // Method to get type from input
+    /**
+     *
+     * @return returns integer which specifies the question type for quiz generation.
+     */
     public static int type(){
         Scanner sc = new Scanner(System.in);
         int type;
@@ -68,7 +74,10 @@ public class GenerateQuiz {
     }
 
 
-    // Method to get quiz length from input
+    /**
+     *
+     * @return returns integer of for quiz length specified by user selection.
+     */
     public static int quizLength(){
         int quizLength;
         while (true) {
@@ -92,7 +101,10 @@ public class GenerateQuiz {
         return quizLength;
     }
 
-    // Method to specify incorrect questions option
+    /**
+     *
+     * @return returns integer to specify previously answered incorrect questions selection
+     */
     public static int incorrect(){
         Scanner sc = new Scanner(System.in);
         System.out.println("Would you like to make the quiz with questions previously answered incorrectly?");
@@ -106,9 +118,11 @@ public class GenerateQuiz {
         return incorrectQuestions;
     }
 
-    // Method to get title of quiz
+    /**
+     *
+     * @return returns string containing user selected quiz title.
+     */
     public static String quizTitle(){
-        // Allows user to set quizTitle to anything they want
         Scanner sc = new Scanner(System.in);
         QuizManager quizManager = new QuizManager();
 
@@ -128,7 +142,12 @@ public class GenerateQuiz {
         return title;
     }
 
-    // Method to specify quizLength when incorrect questions are selected
+    /**
+     *
+     * @param incorrectQuestions defines whether user selected to make quiz out of previously
+     *                           answered incorrect questions
+     * @return returns quiz length when user selects to make quiz out of previously answered incorrect questions
+     */
     public static int incorrectQuizLength(int incorrectQuestions){
         int incorrectQuizLength;
         if(incorrectQuestions == 0){
@@ -140,7 +159,10 @@ public class GenerateQuiz {
         return incorrectQuizLength;
     }
 
-    // Generates a quiz of random questions given the length of the quiz
+
+    /**
+     * Generates a quiz made out of random questions giving user option to select length of the quiz.
+     */
     public static void randomQuiz(){
         int quizLength = quizLength();
         String title = quizTitle();
@@ -149,7 +171,10 @@ public class GenerateQuiz {
         Quiz quiz = new Quiz(randGeneratedQuestionsIdArr, title);
     }
 
-    // Generates a quiz of random incorrect questions
+
+    /**
+     * Generates a quiz made of random previously answered incorrectly questions
+     */
     public static void incorrectQuestionsQuiz(){
         Listing listing = new Listing();
         String title = quizTitle();
@@ -161,16 +186,16 @@ public class GenerateQuiz {
         }
     }
 
-    // Generates a quiz of random questions given topic, length and option for incorrect questions
+    /**
+     *  Generates a quiz of random questions given topic, length and option for incorrect questions
+     */
     public static void specifiedQuizTopic(){
         Scanner sc = new Scanner(System.in);
 
-        // Topic, incorrect questions option and quizLength selection
+        // Topic, incorrect questions option, quizLength and title selection
         String topic = topic();
         int incorrectQuestions = incorrect();
         int quizLength = incorrectQuizLength(incorrectQuestions);
-        // Quiz length depends on how many questions of same topic that are in the database
-        // Should be enough questions for topic
         String title = quizTitle();
 
         // Quiz generator
@@ -181,11 +206,13 @@ public class GenerateQuiz {
 
     }
 
-    // Generates a qiz of random questions given type, length and option for incorrect questions
+    /**
+     * Generates a quiz of random questions given type, length and option for previously answered incorrect questions
+      */
     public static void specifiedQuizType(){
         Scanner sc = new Scanner(System.in);
 
-        //Type, incorrect option and quiz length
+        //Type, incorrect option, quiz length and title selection
         int type = type();
         int incorrectQuestions = incorrect();
         int quizLength = incorrectQuizLength(incorrectQuestions);
@@ -199,19 +226,18 @@ public class GenerateQuiz {
 
     }
 
-    // Generates a quiz of specified question type, topic, quizLength and option for incorrect questions
+    /**
+     * Generates a quiz of specified question type, topic, quizLength and option for previously answered
+     * incorrect questions
+      */
     public static void specifiedQuizAll() {
         Scanner sc = new Scanner(System.in);
 
-        // Topic, type and incorrect questions option
+        // Topic, type, incorrect questions and title option
         String topic = topic();
         int type = type();
         int incorrectQuestions = incorrect();
         int quizLength = incorrectQuizLength(incorrectQuestions);
-        // Quiz length depends on how many questions of the same type and topic we have
-        // Make a quizLength for incorrectQuestions and quizLength for type
-        // if getQuestionsByType.length is less than length provided then return
-        // the length of questionByType and topic
         String title = quizTitle();
 
         // Quiz generator
@@ -222,7 +248,9 @@ public class GenerateQuiz {
 
     }
 
-    // Menu to give user option for which quiz to generate
+    /**
+     * Menu to give user option for which quiz to generate
+      */
     public static void generateQuiz(){
         Scanner sc = new Scanner(System.in);
         int quizType;
