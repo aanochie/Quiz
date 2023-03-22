@@ -10,6 +10,9 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class QuestionIO {
+    /**
+     * provides an interface which lets users decide whether they want to create, update or delete a question
+     */
     public static void main() {
         boolean running = true;
         while (running) {
@@ -34,6 +37,9 @@ public class QuestionIO {
         }
     }
 
+    /**
+     * asks the user for information to create a question
+     */
     public static void create() {
         Scanner myScanner = new Scanner(System.in);
         System.out.println("Please enter the question:");
@@ -81,6 +87,11 @@ public class QuestionIO {
         }
     }
 
+    /**
+     * displays every question and then makes the user choose one
+     * @param action a string which is either 'update' or 'delete'
+     * @return the question chosen by the user
+     */
     public static Question getQuestion(String action) {
         Listing listing = new Listing();
         List<Question> allQuestions = listing.getAllQuestions();
@@ -105,6 +116,9 @@ public class QuestionIO {
         return allQuestions.get(Integer.parseInt(questionNumber) - 1);
     }
 
+    /**
+     * allows the user to choose a part of the question to update
+     */
     public static void update() {
         Scanner myScanner = new Scanner(System.in);
 
@@ -129,6 +143,10 @@ public class QuestionIO {
         System.out.println("Updated question:\n" + questionObj);
     }
 
+    /**
+     * allows the user to enter the new question
+     * @param questionObj the question being updated
+     */
     public static void updateQuestion(Question questionObj) {
         Scanner myScanner = new Scanner(System.in);
 
@@ -141,6 +159,10 @@ public class QuestionIO {
         questionObj.update();
     }
 
+    /**
+     * allows the user to enter the new answer
+     * @param questionObj the question being updated
+     */
     public static void updateAnswer(Question questionObj) {
         Scanner myScanner = new Scanner(System.in);
 
@@ -153,6 +175,9 @@ public class QuestionIO {
         questionObj.update();
     }
 
+    /**
+     * deletes a question that the user chooses
+     */
     public static void delete() {
         Scanner myScanner = new Scanner(System.in);
 
@@ -179,6 +204,9 @@ public class QuestionIO {
         }
     }
 
+    /**
+     * allows the user to choose criteria for questions to be listed
+     */
     public static void listingIO() {
         boolean running = true;
         while (running) {
@@ -207,17 +235,26 @@ public class QuestionIO {
         }
     }
 
+    /**
+     * @param questionList the list of questions to be outputted
+     */
     public static void outputList(List<Question> questionList) {
         for (int i = 0; i < questionList.size(); i++) {
             System.out.println((i + 1) + ". " + questionList.get(i) + "\n");
         }
     }
 
+    /**
+     * @return a list containing every question
+     */
     public static List<Question> getAllQuestions() {
         Listing listing = new Listing();
         return listing.getAllQuestions();
     }
 
+    /**
+     * @return a list containing every question of a specified topic
+     */
     public static List<Question> getQuestionsByTopic() {
         Scanner myScanner = new Scanner(System.in);
         System.out.println("Which topic would you like to see questions from?\n1. Architecture\n2. Maths\n3. Programming\n4. Databases");
@@ -241,11 +278,17 @@ public class QuestionIO {
         return questions;
     }
 
+    /**
+     * @return a list containing every question that the user answered incorrectly the last time it was attempted
+     */
     public static List<Question> getIncorrectQuestions() {
         Listing listing = new Listing();
         return listing.getIncorrectQuestions();
     }
 
+    /**
+     * @return a list containing every question of a specified type
+     */
     public static List<Question> getQuestionsByType() {
         Scanner myScanner = new Scanner(System.in);
         System.out.println("Which type of questions would you like to see?\n1. Multiple choice\n2. Short answer");
