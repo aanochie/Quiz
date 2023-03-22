@@ -4,9 +4,18 @@ import org.hibernate.query.Query;
 
 import java.util.*;
 
-
+/**
+ * This class groups all questions by a specified type, topic, length and/or previously answered incorrect questions.
+ * @author A. Anochie
+ * @author G. Lowes
+ * @author H. Luo
+ */
 public class Listing {
     private List<Question> allQuestions = new ArrayList<>();
+
+    /**
+     * Constructor adds all the questions in the Questions table to the list of questions.
+     */
     public Listing(){
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();

@@ -2,6 +2,10 @@ package csc1035.project2;
 
 import java.util.*;
 
+/**
+ * This class generates a specified quiz taking user input for the required parameters to generate quiz
+ * @author A. Anochie
+ */
 public class GenerateQuiz {
 
     /**

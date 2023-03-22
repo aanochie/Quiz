@@ -23,7 +23,6 @@ public class Quiz {
     @Column(name = "length")
     private int length;
     // Number of questions
-    // For number of questions in quiz return int
 
     @Column(name = "score")
     private int score; // Users previous score of set quiz
@@ -90,13 +89,12 @@ public class Quiz {
 
 
     /**
-     * This constructor makes up for a 5-question quiz and assigns each question to its specific id
+     * This constructor makes and saves a quiz by assigning each questionId to its specific qid
      * @param generatedQuestionId
      */
     public Quiz(int[] generatedQuestionId, String title) {
         Field[] fields = this.getClass().getDeclaredFields();
         // j is initialized as 4 so id, title, score and length are not counted in the loop
-        // To check this println(fields[0]+\n fields[1]) should show Quiz.id and Quiz.score
         for(int i=0, j=4; i < generatedQuestionId.length; i++, j++){
             try{
                 fields[j].setAccessible(true);
