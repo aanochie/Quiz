@@ -6,9 +6,9 @@
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/csc1035_team45?enabledTLSProtocols=TLSv1.2</property>
-        <property name="hibernate.connection.username">csc1035_team45</property>
-        <property name="hibernate.connection.password">BeerEtchWrit</property>
+        <property name="hibernate.connection.url">jdbc:mysql://cs-db.ncl.ac.uk:3306/csc1035_team45</property>
+        <property name="hibernate.connection.username">USERNAME</property>
+        <property name="hibernate.connection.password">PASSWORD</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
         <property name="show_sql">false</property>
         <property name="format_sql">false</property>
