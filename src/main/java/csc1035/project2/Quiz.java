@@ -8,6 +8,7 @@ import java.util.List;
 /**
  * This class represents a table called "Quiz", which holds space for a unique quiz id, each question id and the most recent score achieved.
  * @author nasimhannan
+ * @author A. Anochie
  */
 @Entity
 @Table(name = "Quizzes")
@@ -90,7 +91,7 @@ public class Quiz {
 
     /**
      * This constructor makes and saves a quiz by assigning each questionId to its specific qid
-     * @param generatedQuestionId
+     * @param generatedQuestionId array of question ids to set the value of each qid field.
      */
     public Quiz(int[] generatedQuestionId, String title) {
         Field[] fields = this.getClass().getDeclaredFields();
@@ -116,6 +117,9 @@ public class Quiz {
 
     }
 
+    /**
+     * Method to save new quiz to database
+     */
     public void save() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
@@ -124,92 +128,184 @@ public class Quiz {
         session.close();
     }
 
-    public void setScore(Integer score){
+    /**
+     * Method to set the score of a quiz
+     * @param score the new score to be set for the quiz
+     */
+    public void setScore(int score){
         this.score =score;
     }
 
+    /**
+     *
+     * @return returns the length of a quiz
+     */
     public int getLength(){
         return this.length;
     }
 
+    /**
+     *
+     * @return returns the title of a quiz
+     */
     public String getTitle(){return this.title;}
 
+    /**
+     *
+     * @return returns the value of qid_1
+     */
     public int getQid_1() {
         return qid_1;
     }
 
+    /**
+     *
+     * @return returns the value of qid_2
+     */
     public int getQid_2() {
         return qid_2;
     }
 
+    /**
+     *
+     * @return returns the value of qid_3
+     */
     public int getQid_3() {
         return qid_3;
     }
 
+    /**
+     *
+     * @return returns the value of qid_4
+     */
     public int getQid_4() {
         return qid_4;
     }
 
+    /**
+     *
+     * @return returns the value of qid_5
+     */
     public int getQid_5() {
         return qid_5;
     }
 
+    /**
+     *
+     * @return returns the value of qid_6
+     */
     public int getQid_6() {
         return qid_6;
     }
 
+    /**
+     *
+     * @return returns the value of qid_7
+     */
     public int getQid_7() {
         return qid_7;
     }
 
+    /**
+     *
+     * @return returns the value of qid_8
+     */
     public int getQid_8() {
         return qid_8;
     }
 
+    /**
+     *
+     * @return returns the value of qid_9
+     */
     public int getQid_9() {
         return qid_9;
     }
 
+    /**
+     *
+     * @return returns the value of qid_10
+     */
     public int getQid_10() {
         return qid_10;
     }
 
+    /**
+     *
+     * @return returns the value of qid_11
+     */
     public int getQid_11() {
         return qid_11;
     }
 
+    /**
+     *
+     * @return returns the value of qid_12
+     */
     public int getQid_12() {
         return qid_12;
     }
 
+    /**
+     *
+     * @return returns the value of qid_13
+     */
     public int getQid_13() {
         return qid_13;
     }
 
+    /**
+     *
+     * @return returns the value of qid_14
+     */
     public int getQid_14() {
         return qid_14;
     }
 
+    /**
+     *
+     * @return returns the value of qid_15
+     */
     public int getQid_15() {
         return qid_15;
     }
 
+    /**
+     *
+     * @return returns the value of qid_16
+     */
     public int getQid_16() {
         return qid_16;
     }
 
+    /**
+     *
+     * @return returns the value of qid_17
+     */
     public int getQid_17() {
         return qid_17;
     }
 
+    /**
+     *
+     * @return returns the value of qid_18
+     */
     public int getQid_18() {
         return qid_18;
     }
 
+    /**
+     *
+     * @return returns the value of qid_19
+     */
     public int getQid_19() {
         return qid_19;
     }
 
+    /**
+     *
+     * @return returns the value of qid_20
+     */
     public int getQid_20() {
         return qid_20;
     }
