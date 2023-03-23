@@ -7,7 +7,16 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
+/**
+ * This class provides the user with an option to delete a selected quiz.
+ * @author A. Anochie
+ * @author G. Lowes
+ */
 public class DeleteQuiz {
+
+    /**
+     * Prints out the list of quizzes in the quizzes table
+     */
     public static void quizList(){
         QuizManager quizManager = new QuizManager();
         List<Quiz> quizzes = quizManager.getAllQuizzes();
@@ -16,6 +25,10 @@ public class DeleteQuiz {
         }
     }
 
+    /**
+     *
+     * @return returns a quiz object chose by the user from a list of quizzes
+     */
     public static Quiz getQuiz(){
         Scanner scanner = new Scanner(System.in);
         QuizManager quizManager = new QuizManager();
@@ -39,6 +52,9 @@ public class DeleteQuiz {
         return allQuizzes.get(Integer.parseInt(quizNumber) - 1);
     }
 
+    /**
+     * Allows the user to delete a selected quiz.
+     */
     public static void delete() {
         Scanner scanner = new Scanner(System.in);
 
