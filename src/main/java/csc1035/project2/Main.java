@@ -12,14 +12,15 @@ public class Main {
         boolean running = true;
         while (running) {
             Scanner myScanner = new Scanner(System.in);
-            System.out.println("What would you like to do?\n1. Create/Update/Delete a question\n2. List questions\n3. Create a quiz\n4. Take a quiz\n5. Exit");
+            System.out.println("What would you like to do?\n1. Create/Update/Delete a question\n2. List questions" +
+                    "\n3. Create a quiz\n4. Delete a quiz\n5. Take a quiz\n6. Exit");
 
             String choice = myScanner.nextLine();
 
-            List<String> validChoices = Arrays.asList("1", "2", "3", "4", "5");
+            List<String> validChoices = Arrays.asList("1", "2", "3", "4", "5", "6");
 
             while (!validChoices.contains(choice)) {
-                System.out.println("Invalid choice. Please enter a number from 1-4:");
+                System.out.println("Invalid choice. Please enter a number from 1-5:");
                 choice = myScanner.nextLine();
             }
 
@@ -27,8 +28,9 @@ public class Main {
                 case "1" -> QuestionIO.main();
                 case "2" -> QuestionIO.listingIO();
                 case "3" -> GenerateQuiz.generateQuiz();
-                case "4" -> TakeQuiz.selectQuiz();
-                case "5" -> running = false;
+                case "4" -> DeleteQuiz.delete();
+                case "5" -> TakeQuiz.selectQuiz();
+                case "6" -> running = false;
             }
         }
     }

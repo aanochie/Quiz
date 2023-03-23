@@ -132,6 +132,8 @@ public class Quiz {
         return this.length;
     }
 
+    public String getTitle(){return this.title;}
+
     public int getQid_1() {
         return qid_1;
     }

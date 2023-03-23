@@ -15,14 +15,14 @@ public class QuizManager {
     /**
      * List of all quizzes in the table
      */
-    private static List<Quiz> allQuizzes;
+    private List<Quiz> allQuizzes;
 
     /**
      *  List of all quiz titles in table
      */
-    private static List<String> quizTitles;
+    private List<String> quizTitles;
 
-    public static List<Quiz> getAllQuizzes(){
+    public List<Quiz> getAllQuizzes(){
         return allQuizzes;
     }
 
